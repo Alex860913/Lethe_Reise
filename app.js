@@ -29,7 +29,7 @@
   var I18N = {
     de: {
       ui: {
-        appTitle: 'Reisekostenabrechnung',
+        appTitle: 'Lethe-Vorlagen-Reise',
         privacy: 'Alle Eingaben bleiben auf diesem Gerät. Die Seite sendet nichts ins Netz.',
         stepLang: 'Sprache', stepType: 'Art der Vorlage', stepFill: 'Ausfüllen',
         stepSign: 'Unterschreiben', stepSave: 'Sichern',
@@ -82,7 +82,7 @@
     },
     en: {
       ui: {
-        appTitle: 'Travel expense report',
+        appTitle: 'Lethe-Vorlagen-Reise',
         privacy: 'Everything you enter stays on this device. This page sends nothing over the network.',
         stepLang: 'Language', stepType: 'Type of form', stepFill: 'Fill in',
         stepSign: 'Sign', stepSave: 'Save',
@@ -135,7 +135,7 @@
     },
     ru: {
       ui: {
-        appTitle: 'Отчёт о командировочных расходах',
+        appTitle: 'Lethe-Vorlagen-Reise',
         privacy: 'Все данные остаются на этом устройстве. Страница ничего не отправляет в сеть.',
         stepLang: 'Язык', stepType: 'Тип формы', stepFill: 'Заполнить',
         stepSign: 'Подписать', stepSave: 'Сохранить',
@@ -359,7 +359,7 @@
   function headBlock(title, withDest) {
     var f = T().f;
     return '<div class="p-head"><h2 class="p-title">' + esc(title) + '</h2>' +
-      '<address class="p-company">LETHE Exterior Doors GmbH<br>Marschgehren 14<br>28779 Bremen</address></div>' +
+      '</div>' +
       '<div class="p-meta">' +
       '<label class="line"><span>' + esc(f.name) + '</span><input type="text" id="f-name" data-k="name" autocomplete="name" value="' + esc(state.name) + '"></label>' +
       '<label class="line"><span>' + esc(f.occasion) + '</span><input type="text" id="f-occasion" data-k="occasion" value="' + esc(state.occasion) + '"></label>' +

@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "Reisekostenabrechnung",
-  "short_name": "Reisekosten",
-  "description": "Reisekostenabrechnung der LETHE Exterior Doors GmbH: Spesen, Belege und Kilometergeld ausfüllen, unterschreiben und als PDF sichern.",
+  "name": "Lethe-Vorlagen-Reise",
+  "short_name": "Lethe-Reise",
+  "description": "Lethe-Vorlagen-Reise der LETHE Exterior Doors GmbH: Spesen, Belege, Kilometergeld, Eigenbeleg und Montagebericht ausfüllen, unterschreiben und als PDF sichern.",
   "lang": "de",
   "start_url": "./",
   "scope": "./",

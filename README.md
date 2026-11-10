@@ -1,6 +1,6 @@
-# Reisekostenabrechnung
+# Lethe-Vorlagen-Reise
 
-Statische Seite für die Reisekostenabrechnung der LETHE Exterior Doors GmbH. Sie läuft komplett im Browser, ohne Server und ohne Build-Schritt.
+Statische Seite „Lethe-Vorlagen-Reise“ der LETHE Exterior Doors GmbH mit den Vorlagen Spesenabrechnung, Abrechnung gegen Beleg, KM-Abrechnung, Eigenbeleg und Montagebericht. Sie läuft komplett im Browser, ohne Server und ohne Build-Schritt.
 
 ## Funktionen
 
@@ -24,17 +24,17 @@ Nach der Word-Vorlage „Stundennachweis / Service Report“: Vorgangs-Nr., Kund
 ### Aussehen und Export
 
 - Tabellenköpfe und Titelbalken sind dunkelblau mit rotem Strich (Farben aus dem LETHE-Logo: `#143868` und `#b61f52`).
-- Das LETHE-Logo steht auf jeder Vorlage oben rechts (im Formular und im PDF). Es ist in `app.js` eingebettet (`LOGO`), braucht also keine weitere Datei.
+- Das LETHE-Logo steht allein oben rechts auf jeder Vorlage (im Formular und im PDF), ohne Firmenname und Anschrift. Die Anschrift steht nur in der Fußzeile. Es ist in `app.js` eingebettet (`LOGO`), braucht also keine weitere Datei.
 - Jede Druckseite endet mit einer Fußzeile: Marschgehren 14 | 28779 Bremen / Germany | Telefon | Telefax | E-Mail | Internet (in `index.html`, Klasse `print-foot`).
 
 Es wird nichts ins Netz gesendet. Eine Content-Security-Policy in `index.html` blockiert jede Netzwerkverbindung der Seite. Gespeichert wird nur über den Download in den Browser auf dem eigenen Gerät.
 
 ## Auf GitHub Pages veröffentlichen
 
-1. Neues Repository auf GitHub anlegen, zum Beispiel `reisekostenabrechnung`.
+1. Neues Repository auf GitHub anlegen, zum Beispiel `Lethe-Vorlagen-Reise`.
 2. Alle Dateien aus diesem Ordner hochladen (`index.html`, `style.css`, `app.js`, `orte.js`, `sw.js`, `manifest.webmanifest`, `icons/`, `favicon.ico`, `README.md`, `GLOSSARY.md`, `docs/`).
 3. Im Repository **Settings → Pages** öffnen, bei **Source** „Deploy from a branch“ wählen, Branch `main` und Ordner `/ (root)` einstellen, speichern.
-4. Nach etwa einer Minute ist die Seite unter `https://<benutzername>.github.io/reisekostenabrechnung/` erreichbar.
+4. Nach etwa einer Minute ist die Seite unter `https://<benutzername>.github.io/Lethe-Vorlagen-Reise/` erreichbar.
 
 Bei einem privaten Repository ist GitHub Pages nur mit bestimmten GitHub-Tarifen verfügbar.
 
