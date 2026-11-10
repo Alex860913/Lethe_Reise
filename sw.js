@@ -1,9 +1,9 @@
 'use strict';
 /* Speichert nur die eigenen Programmdateien dieser Seite. Eingaben der Nutzer werden hier nie berührt. */
-var CACHE = 'reisekosten-v8';
+var CACHE = 'reisekosten-v10';
 var FILES = [
   './', 'index.html', 'style.css', 'app.js', 'orte.js', 'manifest.webmanifest',
-  'img/lethe-logo.jpg', 'img/dekra.jpg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/maskable-512.png', 'icons/apple-touch-icon.png'
+  'favicon.ico', 'icons/icon-192.png', 'icons/icon-256.png', 'icons/icon-384.png', 'icons/icon-512.png', 'icons/maskable-512.png', 'icons/apple-touch-icon.png'
 ];
 
 self.addEventListener('install', function (e) {

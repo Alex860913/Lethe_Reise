@@ -19,9 +19,13 @@ Begriffe stehen in `GLOSSARY.md`.
 - Montagebericht: Vor dem Export werden die Textfelder (Bemerkung, ausgeführte Arbeiten, Fotobemerkungen) auf Fehler geprüft. Der Export ist trotz Hinweisen möglich.
 - Montagebericht: Die Exportsprache (Deutsch, Englisch, zweisprachig) ändert nur Beschriftungen und Vertragstext. Eingaben werden nicht übersetzt.
 - Montagebericht: Höchstens 30 Fotos, je längste Seite 1600 px.
+- Jede Druckseite hat die Fußzeile mit Anschrift, Telefon, Telefax, E-Mail und Internet. Das LETHE-Logo steht auf jeder Vorlage oben rechts.
+- Farben: Tabellenköpfe, Titelbalken und Kennzeichenfeld in Dunkelblau (#143868) mit rotem Strich (#b61f52).
 - Alle Eingaben bleiben auf dem Gerät. Es gibt keine Übertragung ins Netz.
 
 ## Offene Punkte
+
+- Die feste Fußzeile wurde nur in Chromium (Chrome, Edge) geprüft. Safari und Firefox können sie anders umbrechen.
 
 - Die Prüfung des Montageberichts ist regelbasiert und enthält keine vollständige Wörterliste. Sie ersetzt keine Korrektur durch eine Person.
 - Eine echte Übersetzung der eigenen Eingaben ins Englische ist ohne Netzverbindung nicht möglich.

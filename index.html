@@ -11,17 +11,24 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Reisekosten">
 <link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="icons/icon-192.png">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="icons/icon-256.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <title>Reisekostenabrechnung</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<table class="print-wrap" role="presentation"><tbody><tr><td>
 <main class="app">
 
   <header class="top noprint">
-    <h1 data-i18n="appTitle">Reisekostenabrechnung</h1>
-    <p class="privacy" data-i18n="privacy"></p>
+    <div class="top-text">
+      <h1 data-i18n="appTitle">Reisekostenabrechnung</h1>
+      <p class="privacy" data-i18n="privacy"></p>
+    </div>
+    <img id="top-logo" class="top-logo" alt="LETHE exterior doors">
   </header>
 
   <section class="step noprint" aria-labelledby="h-lang">
@@ -72,7 +79,9 @@
   </section>
 
 </main>
+</td></tr></tbody><tfoot><tr><td><div class="pw-spacer" aria-hidden="true"></div></td></tr></tfoot></table>
 <dialog id="dlg" class="noprint" aria-labelledby="dlg-title"><div id="dlg-body"></div></dialog>
+<footer class="print-foot" aria-hidden="true"><span>Marschgehren 14</span><span>28779 Bremen / Germany</span><span>Telefon +49 421 699069-0</span><span>Telefax +49 421 699069-10</span><span><a href="mailto:info@lethe-bremen.de">info@lethe-bremen.de</a></span><span><a href="https://www.lethe-bremen.de">www.lethe-bremen.de</a></span></footer>
 <script src="orte.js"></script>
 <script src="app.js"></script>
 </body>
