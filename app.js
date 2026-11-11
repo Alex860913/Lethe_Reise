@@ -280,6 +280,7 @@
     de: { title: 'Stundennachweis', vorgang: 'Vorgangs-Nr.', kunde: 'Kunde', ort: 'Einsatzort', schiff: 'Projekt Schiff', zeitraum: 'Zeitraum',
       liefer: 'Lieferschein', montage: 'Montagebericht', cDate: 'Datum', cName: 'Name', cWork: 'Arbeitszeit', cTravel: 'Reisezeit', cExtra: 'Mehrarbeit',
       remarks: 'Bemerkung', activities: 'Ausgeführte Arbeiten', sigTech: 'Unterschrift Monteur', date: 'Datum', sigClient: 'Unterschrift Auftraggeber',
+      tbar: 'Textformat', fBold: 'Fett', fItalic: 'Kursiv', fUnder: 'Unterstrichen', fStrike: 'Durchgestrichen', fUl: 'Aufzählung', fOl: 'Nummerierung', fClear: 'Formatierung entfernen',
       photos: 'Fotos', addPhoto: 'Fotos hinzufügen', photoRemark: 'Bemerkung zum Foto', rmPhoto: 'Foto entfernen',
       legal: ['Die Monteure sind angewiesen, die Arbeiten schnell und gewissenhaft durchzuführen. Samstags-, Sonn- und Feiertagsstunden sowie Überstundenzuschläge werden nach gültigem Tarif berechnet.',
         'Die Richtigkeit der Arbeitszeit und der Materialien wird bestätigt. Die aufgeführten Leistungen werden hiermit bescheinigt und abgenommen. Wegzeit zählt mit.',
@@ -287,12 +288,14 @@
     en: { title: 'Service Report', vorgang: 'Case no.', kunde: 'Customer', ort: 'Place of work', schiff: 'Project vessel', zeitraum: 'Period',
       liefer: 'Delivery note', montage: 'Assembly report', cDate: 'Date', cName: 'Name', cWork: 'Time of work', cTravel: 'Travel time', cExtra: 'Extra work',
       remarks: 'Remarks', activities: 'Activities carried out', sigTech: 'Signature of technician', date: 'Date', sigClient: 'Signature of client',
+      tbar: 'Text format', fBold: 'Bold', fItalic: 'Italic', fUnder: 'Underline', fStrike: 'Strikethrough', fUl: 'Bulleted list', fOl: 'Numbered list', fClear: 'Clear formatting',
       photos: 'Photos', addPhoto: 'Add photos', photoRemark: 'Remark on photo', rmPhoto: 'Remove photo',
       legal: ['Our technicians are advised to perform the work quick and precise. Working hours on weekends and official holidays as well as premium rates are calculated according to the tariff in force.',
         'Correctness of working times and materials is confirmed. Herewith the performed service is confirmed and approved. Travel times to be added. Unless fully paid the goods shall remain our property of Lethe Exterior Doors GmbH.'] },
     ru: { title: 'Табель рабочего времени', vorgang: 'Номер дела', kunde: 'Заказчик', ort: 'Место работ', schiff: 'Проект (судно)', zeitraum: 'Период',
       liefer: 'Накладная', montage: 'Монтажный отчёт', cDate: 'Дата', cName: 'Имя', cWork: 'Время работы', cTravel: 'Время в пути', cExtra: 'Сверхурочные',
       remarks: 'Примечание', activities: 'Выполненные работы', sigTech: 'Подпись монтажника', date: 'Дата', sigClient: 'Подпись заказчика',
+      tbar: 'Формат текста', fBold: 'Жирный', fItalic: 'Курсив', fUnder: 'Подчёркнутый', fStrike: 'Зачёркнутый', fUl: 'Маркированный список', fOl: 'Нумерованный список', fClear: 'Убрать форматирование',
       photos: 'Фото', addPhoto: 'Добавить фото', photoRemark: 'Примечание к фото', rmPhoto: 'Удалить фото', legal: null }
   };
   /* Beim Export gesetzt: 'de', 'en' oder 'bi' (zweisprachig). Sonst gilt die Sprache der Oberfläche. */
@@ -488,6 +491,57 @@
   function moLine(field, label, extra) {
     return '<label class="line"><span>' + esc(label) + '</span><input type="text" data-k="mo" data-f="' + field + '" value="' + esc(state.mo[field]) + '"' + (extra || '') + '></label>';
   }
+  /* ---------- Formatierbarer Text (Fett, Kursiv, Unterstrichen, Listen) ---------- */
+  var OKTAG = { B: 'b', STRONG: 'b', I: 'i', EM: 'i', U: 'u', S: 's', STRIKE: 's', DEL: 's', UL: 'ul', OL: 'ol', LI: 'li', BR: 'br', DIV: 'div', P: 'p' };
+  function sanitizeHtml(html) {
+    var doc = new DOMParser().parseFromString('<body>' + String(html == null ? '' : html) + '</body>', 'text/html');
+    function walk(n) {
+      var o = '';
+      n.childNodes.forEach(function (c) {
+        if (c.nodeType === 3) o += esc(c.nodeValue);
+        else if (c.nodeType === 1) {
+          var t = c.tagName;
+          if (t === 'SCRIPT' || t === 'STYLE') return;
+          var k = OKTAG[t];
+          if (k === 'br') o += '<br>';
+          else if (k) o += '<' + k + '>' + walk(c) + '</' + k + '>';
+          else o += walk(c);
+        }
+      });
+      return o;
+    }
+    return walk(doc.body).slice(0, 20000);
+  }
+  function htmlToText(html) {
+    var doc = new DOMParser().parseFromString('<body>' + String(html || '') + '</body>', 'text/html'), out = '';
+    function nl() { if (out && !/\n$/.test(out)) out += '\n'; }
+    (function walk(n) {
+      n.childNodes.forEach(function (c) {
+        if (c.nodeType === 3) out += c.nodeValue;
+        else if (c.nodeType === 1) {
+          var t = c.tagName;
+          if (t === 'BR') out += '\n';
+          else if (t === 'LI') { nl(); out += '- '; walk(c); nl(); }
+          else if (t === 'DIV' || t === 'P' || t === 'UL' || t === 'OL') { nl(); walk(c); nl(); }
+          else walk(c);
+        }
+      });
+    })(doc.body);
+    return out.replace(/\n+$/, '');
+  }
+  function plainToHtml(t) { return esc(t).replace(/\r?\n/g, '<br>'); }
+  function moRich(f, value, label) {
+    var d = MO[state.lang] || MO.de;
+    var btn = function (cmd, inner, name) {
+      return '<button type="button" class="rtb" data-cmd="' + cmd + '" aria-label="' + esc(name) + '" title="' + esc(name) + '" aria-pressed="false">' + inner + '</button>';
+    };
+    return '<div class="rte-wrap"><div class="rte-bar noprint" role="toolbar" aria-label="' + esc(d.tbar) + '">' +
+      btn('bold', '<b>B</b>', d.fBold) + btn('italic', '<i>I</i>', d.fItalic) + btn('underline', '<u>U</u>', d.fUnder) + btn('strikeThrough', '<s>S</s>', d.fStrike) +
+      btn('insertUnorderedList', '•', d.fUl) + btn('insertOrderedList', '1.', d.fOl) + btn('removeFormat', '⌫', d.fClear) +
+      '</div><div class="rte" contenteditable="true" role="textbox" aria-multiline="true" aria-label="' + esc(label) + '" data-k="mo" data-f="' + f +
+      '" spellcheck="true" lang="' + state.lang + '">' + sanitizeHtml(value) + '</div><div class="pt rich" aria-hidden="true"></div></div>';
+  }
+
   function moArea(k, f, i, value, label, rows) {
     var idx = i === null ? '' : ' data-i="' + i + '"';
     return '<textarea class="mo-area" data-k="' + k + '"' + idx + ' data-f="' + f + '" rows="' + rows + '" spellcheck="true" lang="' + state.lang +
@@ -526,8 +580,8 @@
       '<table class="grid mo"><colgroup><col class="mc-date"><col class="mc-name"><col class="mc-h"><col class="mc-h"><col class="mc-h"><col class="noprint c-rm"></colgroup>' +
       '<thead><tr><th>' + esc(L('cDate')) + '</th><th>' + esc(L('cName')) + '</th><th>' + esc(L('cWork')) + '</th><th>' + esc(L('cTravel')) + '</th><th>' + esc(L('cExtra')) +
       '</th><th class="noprint c-rm"></th></tr></thead><tbody>' + rows + '</tbody></table>' + addBtn('mrow') +
-      '<h3 class="mo-bar">' + esc(L('remarks')) + '</h3>' + moArea('mo', 'bemerkung', null, m.bemerkung, L('remarks'), 3) +
-      '<h3 class="mo-bar">' + esc(L('activities')) + '</h3>' + moArea('mo', 'arbeiten', null, m.arbeiten, L('activities'), 8) +
+      '<h3 class="mo-bar">' + esc(L('remarks')) + '</h3>' + moRich('bemerkung', m.bemerkung, L('remarks')) +
+      '<h3 class="mo-bar">' + esc(L('activities')) + '</h3>' + moRich('arbeiten', m.arbeiten, L('activities')) +
       legalHtml() +
       '<div class="mo-sign">' +
         '<div class="sg"><div class="sg-top">' + sigImg(state.sig) + '</div><div class="sg-line"></div><span>' + esc(L('sigTech')) + '</span></div>' +
@@ -546,6 +600,10 @@
     paperEl.querySelectorAll('textarea').forEach(function (t) {
       var d = t.nextElementSibling;
       if (d && d.classList.contains('pt')) d.textContent = t.value;
+    });
+    paperEl.querySelectorAll('.rte').forEach(function (r) {
+      var d = r.nextElementSibling;
+      if (d && d.classList.contains('pt')) d.innerHTML = sanitizeHtml(r.innerHTML);
     });
   }
 
@@ -768,8 +826,8 @@
     return out;
   }
 
-  function fixText(text, lang) {
-    var lines = String(text || '').split(/\r?\n/), prevEnd = true;
+  function fixText(text, lang, ctx) {
+    var lines = String(text || '').split(/\r?\n/), prevEnd = ctx ? ctx.prevEnd : true;
     var res = lines.map(function (ln) {
       if (!ln.trim()) { prevEnd = true; return ln; }
       var lead = (/^\s*(?:[-–•*]|\d+[.)])\s+/.exec(ln) || [''])[0];
@@ -790,15 +848,31 @@
       prevEnd = /[.!?:;]$/.test(body.trim());
       return lead + body;
     });
+    if (ctx) ctx.prevEnd = prevEnd;
     return res.join('\n');
+  }
+  function fixHtml(html, lang) {
+    var doc = new DOMParser().parseFromString('<body>' + sanitizeHtml(html) + '</body>', 'text/html'), ctx = { prevEnd: true };
+    (function walk(n) {
+      n.childNodes.forEach(function (c) {
+        if (c.nodeType === 3) {
+          var m = /^(\s*)([\s\S]*?)(\s*)$/.exec(c.nodeValue);
+          if (m[2]) c.nodeValue = m[1] + fixText(m[2], lang, ctx) + m[3];
+        } else if (c.nodeType === 1) { if (c.tagName === 'LI') ctx.prevEnd = true; walk(c); }
+      });
+    })(doc.body);
+    return sanitizeHtml(doc.body.innerHTML);
   }
 
   function checkFields() {
-    var ui = T().ui, list = [];
-    list.push({ label: L('activities'), get: function () { return state.mo.arbeiten; }, set: function (v) { state.mo.arbeiten = v; } });
-    list.push({ label: L('remarks'), get: function () { return state.mo.bemerkung; }, set: function (v) { state.mo.bemerkung = v; } });
+    var list = [];
+    function rich(label, key) {
+      return { label: label, text: function () { return htmlToText(state.mo[key]); }, fixIt: function (lang) { state.mo[key] = fixHtml(state.mo[key], lang); } };
+    }
+    list.push(rich(L('activities'), 'arbeiten'));
+    list.push(rich(L('remarks'), 'bemerkung'));
     state.mofotos.forEach(function (ph, i) {
-      list.push({ label: L('photos') + ' ' + (i + 1), get: function () { return ph.text; }, set: function (v) { ph.text = v; } });
+      list.push({ label: L('photos') + ' ' + (i + 1), text: function () { return ph.text; }, fixIt: function (lang) { ph.text = fixText(ph.text, lang); } });
     });
     return list;
   }
@@ -806,7 +880,7 @@
   function collectFindings() {
     var lang = state.lang, all = [];
     checkFields().forEach(function (fl) {
-      scanText(fl.get(), lang).forEach(function (x) { x.label = fl.label; all.push(x); });
+      scanText(fl.text(), lang).forEach(function (x) { x.label = fl.label; all.push(x); });
     });
     return all;
   }
@@ -859,10 +933,9 @@
     else if (a === 'fix') {
       var n = 0, lang = state.lang;
       checkFields().forEach(function (fl) {
-        var before = scanText(fl.get(), lang).filter(function (x) { return FIXABLE[x.code]; }).length;
-        var nv = fixText(fl.get(), lang);
-        if (nv !== fl.get()) fl.set(nv);
-        var after = scanText(fl.get(), lang).filter(function (x) { return FIXABLE[x.code]; }).length;
+        var before = scanText(fl.text(), lang).filter(function (x) { return FIXABLE[x.code]; }).length;
+        fl.fixIt(lang);
+        var after = scanText(fl.text(), lang).filter(function (x) { return FIXABLE[x.code]; }).length;
         n += Math.max(0, before - after);
       });
       exNotice = T().ui.exFixed + n;
@@ -879,6 +952,10 @@
     var el = e.target, k = el.dataset.k;
     if (!k) return;
     var v = el.value;
+    if (el.classList && el.classList.contains('rte')) {
+      v = sanitizeHtml(el.innerHTML);
+      if (!htmlToText(v).trim()) v = '';
+    }
     if (el.dataset.i !== undefined) state[k][+el.dataset.i][el.dataset.f] = v;
     else if (k === 'hosp') state.hosp[el.dataset.t][el.dataset.f] = v;
     else if (k === 'mo') state.mo[el.dataset.f] = el.type === 'checkbox' ? el.checked : v;
@@ -907,6 +984,39 @@
       renderPaper();
     }
   });
+  paperEl.addEventListener('mousedown', function (e) {
+    if (e.target.closest && e.target.closest('.rtb')) e.preventDefault();
+  });
+  paperEl.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('.rtb');
+    if (!b) return;
+    var ed = b.closest('.rte-wrap').querySelector('.rte');
+    if (document.activeElement !== ed) ed.focus();
+    try { document.execCommand('styleWithCSS', false, false); } catch (x) { /* ältere Browser */ }
+    document.execCommand(b.getAttribute('data-cmd'), false, null);
+    ed.dispatchEvent(new Event('input', { bubbles: true }));
+    updateToolbar();
+  });
+  paperEl.addEventListener('paste', function (e) {
+    var ed = e.target.closest && e.target.closest('.rte');
+    if (!ed) return;
+    e.preventDefault();
+    /* Eingefügt wird nur reiner Text. Fremde Formatierung (Word, Webseiten) wird nicht übernommen. */
+    var cd = e.clipboardData || window.clipboardData, txt = cd ? cd.getData('text/plain') : '';
+    if (txt) document.execCommand('insertText', false, txt);
+  });
+  function updateToolbar() {
+    var ed = document.activeElement && document.activeElement.closest ? document.activeElement.closest('.rte') : null;
+    paperEl.querySelectorAll('.rtb').forEach(function (b) {
+      var on = false;
+      if (ed && ed.parentNode === b.closest('.rte-wrap')) {
+        try { on = /^(bold|italic|underline|strikeThrough|insertUnorderedList|insertOrderedList)$/.test(b.getAttribute('data-cmd')) && document.queryCommandState(b.getAttribute('data-cmd')); } catch (x) { on = false; }
+      }
+      b.classList.toggle('on', !!on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+  document.addEventListener('selectionchange', updateToolbar);
   paperEl.addEventListener('change', function (e) {
     if (e.target.id === 'mo-files') { addPhotos(e.target.files); e.target.value = ''; }
   });
@@ -973,8 +1083,14 @@
     return s.trim().replace(/[^\p{L}\p{N}-]+/gu, '_').replace(/^_+|_+$/g, '').slice(0, 40);
   }
   function fileBase() {
+    if (state.type === 'montage') {
+      /* Vorgang_Kunde_Projekt-Schiff_Datum */
+      var mp = [slug(state.mo.vorgang), slug(state.mo.kunde), slug(state.mo.schiff), state.date || localToday()].filter(Boolean);
+      if (mp.length === 1) mp.unshift(FILE_NAMES.montage);
+      return mp.join('_');
+    }
     var parts = [FILE_NAMES[state.type]];
-    var n = slug(state.type === 'montage' ? state.mo.kunde : state.name);
+    var n = slug(state.name);
     if (n) parts.push(n);
     parts.push(state.date || localToday());
     return parts.join('_');
@@ -1086,8 +1202,8 @@
     state.sigCust = typeof d.sigCust === 'string' && SIG_RE.test(d.sigCust) ? d.sigCust : null;
     var mo = d.mo && typeof d.mo === 'object' ? d.mo : {};
     ['vorgang', 'kunde', 'ort', 'schiff', 'zeitraum'].forEach(function (k) { state.mo[k] = str(mo[k]); });
-    state.mo.arbeiten = typeof mo.arbeiten === 'string' ? mo.arbeiten.slice(0, 5000) : '';
-    state.mo.bemerkung = typeof mo.bemerkung === 'string' ? mo.bemerkung.slice(0, 5000) : '';
+    state.mo.arbeiten = typeof mo.arbeiten === 'string' ? sanitizeHtml(/[<]/.test(mo.arbeiten) ? mo.arbeiten : plainToHtml(mo.arbeiten)) : '';
+    state.mo.bemerkung = typeof mo.bemerkung === 'string' ? sanitizeHtml(/[<]/.test(mo.bemerkung) ? mo.bemerkung : plainToHtml(mo.bemerkung)) : '';
     state.mo.liefer = mo.liefer === true;
     state.mo.montage = mo.montage === true;
     state.mofotos = (Array.isArray(d.mofotos) ? d.mofotos : []).slice(0, MAX_PHOTOS).filter(function (ph) {

@@ -18,6 +18,8 @@ Nach der Word-Vorlage „Stundennachweis / Service Report“: Vorgangs-Nr., Kund
 
 - Zwei Unterschriftsfelder: Monteur und Auftraggeber (Kunde). Pflicht sind der Kundenname und die Unterschrift des Monteurs, die Kundenunterschrift ist freiwillig.
 - Der Zeitraum wird automatisch aus dem frühesten und spätesten Datum der Zeittabelle berechnet.
+- Bemerkung und ausgeführte Arbeiten lassen sich formatieren: fett, kursiv, unterstrichen, durchgestrichen, Aufzählung, Nummerierung, Formatierung entfernen (Schaltflächen über dem Feld, Tastenkürzel Strg+B, Strg+I, Strg+U). Beim Einfügen wird nur reiner Text übernommen.
+- Dateiname beim Export und beim Sichern: `Vorgang_Kunde_Projekt-Schiff_Datum`, zum Beispiel `V-2026_114_Meyer_MS-Nordstern_2026-11-11`. Leere Angaben entfallen.
 - Fotos mit Bemerkung (Kamera oder Galerie, höchstens 30, werden verkleinert). Sie erscheinen im PDF auf einer eigenen Seite.
 - Vor dem PDF-Export erscheint eine Prüfung von Rechtschreibung und Satzzeichen mit der Möglichkeit, einfache Fehler automatisch zu korrigieren. Sie läuft auf dem Gerät und findet typische Fehler (doppelte Wörter, Leerzeichen, Satzzeichen, Großschreibung am Satzanfang, häufige Tippfehler, fehlendes Komma vor „dass“ / „weil“). Eine vollständige Rechtschreibprüfung leistet zusätzlich der Browser in den Textfeldern.
 - Vor dem Export fragt ein Dialog bei **allen** Vorlagen nach der Exportsprache: Deutsch oder Englisch (beim Montagebericht zusätzlich zweisprachig wie die Vorlage). Beschriftungen und Vertragstext wechseln die Sprache, eigene Eingaben werden nicht übersetzt.

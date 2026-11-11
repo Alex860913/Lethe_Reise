@@ -22,6 +22,8 @@ Begriffe stehen in `GLOSSARY.md`.
 - Montagebericht: Höchstens 30 Fotos, je längste Seite 1600 px.
 - Jede Druckseite hat die Fußzeile mit Anschrift, Telefon, Telefax, E-Mail und Internet. Oben rechts steht auf jeder Vorlage nur das LETHE-Logo, ohne Firmenname und Anschrift.
 - Farben: Tabellenköpfe, Titelbalken und Kennzeichenfeld in Dunkelblau (#143868) mit rotem Strich (#b61f52).
+- Montagebericht: Bemerkung und ausgeführte Arbeiten werden als bereinigtes HTML gespeichert (erlaubt: fett, kursiv, unterstrichen, durchgestrichen, Listen, Zeilenumbrüche). Die Prüfung und die automatische Korrektur arbeiten auf dem Text und erhalten die Formatierung. Fotobemerkungen bleiben reiner Text.
+- Montagebericht: Der Dateiname lautet Vorgang_Kunde_Projekt-Schiff_Datum (Datum = Datum neben der Unterschrift). Sonderzeichen werden zu Unterstrichen, leere Teile entfallen.
 - Alle Eingaben bleiben auf dem Gerät. Es gibt keine Übertragung ins Netz.
 
 ## Offene Punkte

@@ -462,3 +462,16 @@ dialog#dlg h3 { margin: 16px 0 6px; font-size: 15px; }
 @media print { .top-logo { display: none; } }
 .paper input[readonly] { background: #f1f3f6; cursor: default; }
 @media print { .paper input[readonly] { background: transparent; } }
+
+/* Formatierbarer Text im Montagebericht */
+.rte-bar { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.rtb { min-width: 40px; height: 36px; padding: 0 8px; font: inherit; font-size: 15px; color: #143868; background: #fff; border: 1px solid #aab3bf; border-radius: 6px; cursor: pointer; }
+.rtb:hover { background: #eef2f8; }
+.rtb.on { background: #143868; color: #fff; border-color: #143868; }
+.rtb:focus-visible { outline: 3px solid #c98a00; outline-offset: 1px; }
+.rte { margin-top: 4px; padding: 6px 8px; min-height: 84px; background: #fff; border: 1px solid #aab3bf; border-radius: 4px; overflow-wrap: anywhere; }
+.rte:focus { outline: 2px solid #c98a00; outline-offset: -2px; background: #fffbe6; }
+.rte ul, .rte ol, .pt.rich ul, .pt.rich ol { margin: 2px 0 2px 20px; padding: 0; }
+.pt.rich { white-space: normal; }
+@media (max-width: 720px) { .rte { font-size: 16px; min-height: 96px; } .rtb { min-width: 44px; height: 44px; } }
+@media print { .rte, .rte-bar { display: none !important; } .pt.rich { min-height: 12mm; } }

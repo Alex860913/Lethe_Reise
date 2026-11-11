@@ -1,6 +1,6 @@
 'use strict';
 /* Speichert nur die eigenen Programmdateien dieser Seite. Eingaben der Nutzer werden hier nie berührt. */
-var CACHE = 'lethe-vorlagen-reise-v12';
+var CACHE = 'lethe-vorlagen-reise-v13';
 var FILES = [
   './', 'index.html', 'style.css', 'app.js', 'orte.js', 'manifest.webmanifest',
   'favicon.ico', 'icons/icon-192.png', 'icons/icon-256.png', 'icons/icon-384.png', 'icons/icon-512.png', 'icons/maskable-512.png', 'icons/apple-touch-icon.png'
