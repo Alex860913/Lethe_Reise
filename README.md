@@ -5,7 +5,7 @@ Statische Seite „Lethe-Vorlagen-Reise“ der LETHE Exterior Doors GmbH mit den
 ## Funktionen
 
 1. Sprache wählen: Deutsch, Englisch oder Russisch.
-2. Vorlage wählen: Spesenabrechnung, Abrechnung gegen Beleg, KM-Abrechnung, Eigenbeleg oder Montagebericht.
+2. Vorlage wählen: Montagebericht, Spesenabrechnung, Abrechnung gegen Beleg, Eigenbeleg oder KM-Abrechnung.
 3. Formular ausfüllen. Summen, Stunden und Kilometergeld (0,30 € je km) werden automatisch berechnet.
 4. Im Feld unterschreiben (Maus, Finger oder Stift).
 5. Sichern ist erst nach Name, Projektname / Vorgang und Unterschrift möglich:
@@ -16,10 +16,11 @@ Statische Seite „Lethe-Vorlagen-Reise“ der LETHE Exterior Doors GmbH mit den
 
 Nach der Word-Vorlage „Stundennachweis / Service Report“: Vorgangs-Nr., Kunde, Einsatzort, Projekt Schiff, Zeitraum, Zeittabelle (Datum, Name, Arbeitszeit, Reisezeit, Mehrarbeit), Bemerkung, ausgeführte Arbeiten, Vertragstext, Unterschriften.
 
-- Zwei Unterschriftsfelder: Monteur und Auftraggeber (Kunde). Beide sind vor dem Sichern Pflicht, dazu der Kunde.
+- Zwei Unterschriftsfelder: Monteur und Auftraggeber (Kunde). Pflicht sind der Kundenname und die Unterschrift des Monteurs, die Kundenunterschrift ist freiwillig.
+- Der Zeitraum wird automatisch aus dem frühesten und spätesten Datum der Zeittabelle berechnet.
 - Fotos mit Bemerkung (Kamera oder Galerie, höchstens 30, werden verkleinert). Sie erscheinen im PDF auf einer eigenen Seite.
 - Vor dem PDF-Export erscheint eine Prüfung von Rechtschreibung und Satzzeichen mit der Möglichkeit, einfache Fehler automatisch zu korrigieren. Sie läuft auf dem Gerät und findet typische Fehler (doppelte Wörter, Leerzeichen, Satzzeichen, Großschreibung am Satzanfang, häufige Tippfehler, fehlendes Komma vor „dass“ / „weil“). Eine vollständige Rechtschreibprüfung leistet zusätzlich der Browser in den Textfeldern.
-- Exportsprache: Deutsch, Englisch oder zweisprachig (wie die Vorlage). Beschriftungen und Vertragstext wechseln die Sprache, eigene Eingaben werden nicht übersetzt.
+- Vor dem Export fragt ein Dialog bei **allen** Vorlagen nach der Exportsprache: Deutsch oder Englisch (beim Montagebericht zusätzlich zweisprachig wie die Vorlage). Beschriftungen und Vertragstext wechseln die Sprache, eigene Eingaben werden nicht übersetzt.
 
 ### Aussehen und Export
 

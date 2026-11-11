@@ -4,7 +4,7 @@
   var KM_RATE = 0.30;
   var LOCALES = { de: 'de-DE', en: 'en-GB', ru: 'ru-RU' };
   var LANG_NAMES = { de: 'Deutsch', en: 'English', ru: 'Kyrillisch' };
-  var TYPES = ['spesen', 'beleg', 'km', 'eigen', 'montage'];
+  var TYPES = ['montage', 'spesen', 'beleg', 'eigen', 'km'];
   var FILE_NAMES = { spesen: 'Spesenabrechnung', beleg: 'Abrechnung_gegen_Beleg', km: 'KM-Abrechnung', eigen: 'Eigenbeleg', montage: 'Montagebericht' };
   var LIMITS = { meal: 20, other: 2, beleg: 17, km: 11, eigen: 12, mrow: 14 };
   var START = { meal: 6, other: 2, beleg: 8, km: 6, eigen: 12, mrow: 8 };
@@ -205,7 +205,7 @@
   var dl = null;
 
   var state = {
-    lang: 'de', type: 'spesen',
+    lang: 'de', type: 'montage',
     name: '', occasion: '', dest: '', city: '', date: localToday(), sig: null, plate: '',
     meal: makeRows('meal'), other: makeRows('other'), beleg: makeRows('beleg'), km: makeRows('km'), eigen: makeRows('eigen'),
     hosp: { spesen: blankHosp(), beleg: blankHosp() },
@@ -493,8 +493,16 @@
     return '<textarea class="mo-area" data-k="' + k + '"' + idx + ' data-f="' + f + '" rows="' + rows + '" spellcheck="true" lang="' + state.lang +
       '" aria-label="' + esc(label) + '">' + esc(value) + '</textarea><div class="pt" aria-hidden="true"></div>';
   }
+  /* Zeitraum = frühestes bis spätestes Datum der Zeittabelle */
+  function zeitraumText() {
+    var d = state.mrow.map(function (r) { return r.date; }).filter(function (x) { return /^\d{4}-\d{2}-\d{2}$/.test(x); }).sort();
+    if (!d.length) return '';
+    var fmt = function (iso) { return iso.slice(8, 10) + '.' + iso.slice(5, 7) + '.' + iso.slice(0, 4); };
+    return d[0] === d[d.length - 1] ? fmt(d[0]) : fmt(d[0]) + ' – ' + fmt(d[d.length - 1]);
+  }
   function paperMontage() {
     var m = state.mo, f = T().f;
+    m.zeitraum = zeitraumText();
     var rows = state.mrow.map(function (r, i) {
       return '<tr class="r-mrow">' +
         '<td data-c="date" data-label="' + esc(L('cDate')) + '">' + cell('mrow', i, 'date', 'date', r.date, L('cDate')) + '</td>' +
@@ -513,7 +521,7 @@
         moLine('vorgang', L('vorgang')) +
         '<h2 class="p-title mo-title">' + esc(moMode() === 'bi' ? MO.de.title + ' / ' + MO.en.title : MO[moMode()].title) + '</h2>' +
         moLine('kunde', L('kunde') + ':', ' autocomplete="off"') + moLine('ort', L('ort') + ':', ' autocomplete="off"') +
-        moLine('schiff', L('schiff') + ':') + moLine('zeitraum', L('zeitraum') + ':') +
+        moLine('schiff', L('schiff') + ':') + moLine('zeitraum', L('zeitraum') + ':', ' readonly id="mo-zeitraum" tabindex="-1"') +
       '</div></div>' +
       '<table class="grid mo"><colgroup><col class="mc-date"><col class="mc-name"><col class="mc-h"><col class="mc-h"><col class="mc-h"><col class="noprint c-rm"></colgroup>' +
       '<thead><tr><th>' + esc(L('cDate')) + '</th><th>' + esc(L('cName')) + '</th><th>' + esc(L('cWork')) + '</th><th>' + esc(L('cTravel')) + '</th><th>' + esc(L('cExtra')) +
@@ -646,7 +654,6 @@
     if (state.type === 'montage') {
       if (!state.mo.kunde.trim()) miss.push(ui.fCustomer);
       if (!state.sig) miss.push(ui.fSigTech);
-      if (!state.sigCust) miss.push(ui.fSigClient);
     } else {
       if (!state.name.trim()) miss.push(ui.fName);
       if (!state.occasion.trim()) miss.push(ui.fOccasion);
@@ -812,9 +819,11 @@
   var exSel = 'de', exNotice = '';
   function dialogHtml() {
     var ui = T().ui, fnd = collectFindings(), fixable = fnd.filter(function (x) { return FIXABLE[x.code]; }).length;
-    var h = '<h2 id="dlg-title">' + esc(ui.exTitle) + '</h2><h3>' + esc(ui.exCheckH) + '</h3>';
+    var mont = state.type === 'montage';
+    var h = '<h2 id="dlg-title">' + esc(ui.exTitle) + '</h2>' + (mont ? '<h3>' + esc(ui.exCheckH) + '</h3>' : '');
     if (exNotice) h += '<p class="status ok">' + esc(exNotice) + '</p>';
-    if (!fnd.length) h += '<p class="status ok">' + esc(ui.exNone) + '</p>';
+    if (!mont) { /* keine Freitextfelder: keine Prüfung nötig */ }
+    else if (!fnd.length) h += '<p class="status ok">' + esc(ui.exNone) + '</p>';
     else {
       h += '<p class="status">' + esc(ui.exFound + fnd.length) + '</p><ul class="fl">' +
         fnd.slice(0, CHECK_LIMIT).map(function (x) {
@@ -822,8 +831,8 @@
         }).join('') + '</ul>' + (fnd.length > CHECK_LIMIT ? '<p class="hint">' + esc(ui.exMore) + '</p>' : '');
       if (fixable) h += '<p><button type="button" class="btn" data-dact="fix">' + esc(ui.exFix) + ' (' + fixable + ')</button></p>';
     }
-    h += '<p class="hint">' + esc(ui.exSpell) + '</p><h3>' + esc(ui.exLangH) + '</h3><div class="seg" role="radiogroup" aria-label="' + esc(ui.exLangH) + '">' +
-      [['de', 'exDe'], ['en', 'exEn'], ['bi', 'exBi']].map(function (o) {
+    h += (mont ? '<p class="hint">' + esc(ui.exSpell) + '</p>' : '') + '<h3>' + esc(ui.exLangH) + '</h3><div class="seg" role="radiogroup" aria-label="' + esc(ui.exLangH) + '">' +
+      [['de', 'exDe'], ['en', 'exEn'], ['bi', 'exBi']].filter(function (o) { return mont || o[0] !== 'bi'; }).map(function (o) {
         return '<label><input type="radio" name="exlang" value="' + o[0] + '"' + (exSel === o[0] ? ' checked' : '') + '><span class="opt">' + esc(ui[o[1]]) + '</span></label>';
       }).join('') + '</div><p class="hint">' + esc(ui.exNote) + '</p>' +
       '<div class="row"><button type="button" class="btn" data-dact="back">' + esc(ui.exBack) + '</button>' +
@@ -875,6 +884,11 @@
     else if (k === 'mo') state.mo[el.dataset.f] = el.type === 'checkbox' ? el.checked : v;
     else state[k] = v;
     if (k === 'dest') updateRates();
+    if (k === 'mrow' && el.dataset.f === 'date' && state.type === 'montage') {
+      state.mo.zeitraum = zeitraumText();
+      var zr = document.getElementById('mo-zeitraum');
+      if (zr) zr.value = state.mo.zeitraum;
+    }
     calc();
     updateStatus();
   });
@@ -1012,24 +1026,20 @@
 
   /* Montagebericht: Beschriftungen in der Exportsprache ausgeben (de, en oder bi), danach zurück zur Oberflächensprache. */
   function doExport(mode) {
+    var prevLang = state.lang;
     exportMode = mode;
+    if (mode === 'de' || mode === 'en') state.lang = mode;
     renderPaper();
     var prev = document.title;
     document.title = fileBase();
-    var done = function () { exportMode = null; document.title = prev; renderPaper(); };
+    var done = function () { exportMode = null; state.lang = prevLang; document.title = prev; renderPaper(); };
     if (dl) { saveViaCapability(fileBase() + '.html', printReadyHtml()); done(); return; }
     window.addEventListener('afterprint', done, { once: true });
     window.print();
   }
 
   $('#btn-pdf').addEventListener('click', function () {
-    if (state.type === 'montage') { openExport(); return; }
-    if (dl) { saveViaCapability(fileBase() + '.html', printReadyHtml()); return; }
-    var prev = document.title;
-    document.title = fileBase();
-    var restore = function () { document.title = prev; };
-    window.addEventListener('afterprint', restore, { once: true });
-    window.print();
+    openExport();
   });
 
   $('#btn-json').addEventListener('click', function () {

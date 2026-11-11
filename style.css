@@ -460,3 +460,5 @@ dialog#dlg h3 { margin: 16px 0 6px; font-size: 15px; }
 .top-logo { width: 170px; max-width: 100%; height: auto; flex: none; background: #fff; padding: 4px 6px; border-radius: 6px; }
 @media (max-width: 480px) { .top-logo { width: 130px; } }
 @media print { .top-logo { display: none; } }
+.paper input[readonly] { background: #f1f3f6; cursor: default; }
+@media print { .paper input[readonly] { background: transparent; } }

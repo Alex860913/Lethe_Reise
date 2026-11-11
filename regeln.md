@@ -15,9 +15,10 @@ Begriffe stehen in `GLOSSARY.md`.
 - Summe des Eigenbelegs = Summe aller Ausgaben ohne Beleg.
 - Bewirtung zählt für Frühstück mit 20 %, für Mittag- und Abendessen mit je 40 %.
 - Zeilenlimits je Vorlage: Verpflegung 20, sonstige Pauschalen 2, Auslagen 17, Fahrten 11, Eigenbeleg 12.
-- Montagebericht: Pflicht sind Kunde, Unterschrift Monteur und Unterschrift Auftraggeber. Name und Projektname gelten hier nicht, der Name steht je Zeile in der Tabelle.
+- Montagebericht: Pflicht sind Kunde und Unterschrift Monteur. Die Unterschrift des Auftraggebers ist freiwillig, der Export geht auch ohne sie. Name und Projektname gelten hier nicht, der Name steht je Zeile in der Tabelle.
 - Montagebericht: Vor dem Export werden die Textfelder (Bemerkung, ausgeführte Arbeiten, Fotobemerkungen) auf Fehler geprüft. Der Export ist trotz Hinweisen möglich.
-- Montagebericht: Die Exportsprache (Deutsch, Englisch, zweisprachig) ändert nur Beschriftungen und Vertragstext. Eingaben werden nicht übersetzt.
+- Alle Vorlagen: Vor dem Export wählt man die Exportsprache (Deutsch oder Englisch, beim Montagebericht auch zweisprachig). Sie ändert nur Beschriftungen und Vertragstext. Eingaben werden nicht übersetzt.
+- Montagebericht: Der Zeitraum ist ein Berechnungsfeld (frühestes bis spätestes Datum der Zeittabelle) und nicht von Hand änderbar.
 - Montagebericht: Höchstens 30 Fotos, je längste Seite 1600 px.
 - Jede Druckseite hat die Fußzeile mit Anschrift, Telefon, Telefax, E-Mail und Internet. Oben rechts steht auf jeder Vorlage nur das LETHE-Logo, ohne Firmenname und Anschrift.
 - Farben: Tabellenköpfe, Titelbalken und Kennzeichenfeld in Dunkelblau (#143868) mit rotem Strich (#b61f52).

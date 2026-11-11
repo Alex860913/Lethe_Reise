@@ -36,7 +36,7 @@ Vorlage „Stundennachweis / Service Report“: bestätigt Arbeitszeit, Reisezei
 Der Kunde, der den Montagebericht gegenzeichnet und damit die Leistungen abnimmt.
 
 **Exportsprache**
-Sprache der Beschriftungen und des Vertragstextes im PDF des Montageberichts: Deutsch, Englisch oder zweisprachig.
+Sprache der Beschriftungen im PDF: Deutsch oder Englisch, beim Montagebericht auch zweisprachig.
 
 **Pauschale**
 Fester Erstattungsbetrag, für den kein Beleg nötig ist.
