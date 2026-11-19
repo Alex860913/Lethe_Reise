@@ -59,17 +59,11 @@ Fahrt im betrieblichen Auftrag mit dem privaten PKW. Erfasst mit Datum, Ziel (Fi
 **Kilometersatz**
 Pauschaler Erstattungssatz je gefahrenem Kilometer einer Dienstfahrt.
 
-**Bewirtung**
-Vom Arbeitgeber unentgeltlich gestellte Mahlzeit (Frühstück, Mittagessen oder Abendessen).
+**Mahlzeitenabzug**
+Kürzung des Tagesbetrags der Spesenabrechnung um 20 % (Frühstück) bzw. 40 % (Mittag-, Abendessen), wenn die Mahlzeit gestellt wurde.
 
-**Geldwerter Vorteil**
-Wert der unentgeltlichen Bewirtung für den Mitarbeiter.
-
-**Verrechnung mit pauschaler Verpflegung**
-Eine der zwei Behandlungen der Bewirtung: Der Vorteil wird mit der Verpflegungspauschale verrechnet.
-
-**Versteuerung als laufender Arbeitslohn**
-Die andere Behandlung der Bewirtung: Der Vorteil wird als Arbeitslohn versteuert.
+**FA / PA**
+Kürzel in der Abrechnung gegen Beleg: FA = Firmenausgaben, PA = Privatausgelegt.
 
 **Lohnart (LA)**
 Buchungsschlüssel der Lohnabrechnung. In den Vorlagen vorkommend: LA 9976 (steuerfrei) und LA 51.

@@ -7,13 +7,15 @@ Begriffe stehen in `GLOSSARY.md`.
 - Name, Projektname / Vorgang und Unterschrift sind vor dem Sichern Pflicht.
 - Der Ort wird auf der Spesenabrechnung einmal oben unter Projektname / Vorgang aus der Liste in `orte.js` gewählt. Die Tabelle hat keine Spalte „Ort“ mehr. Die Auswahl ist kein Pflichtfeld.
 - Unter der Auswahl stehen die Pauschbeträge des gewählten Landes bzw. Ortes (Auslandspauschalen ab 1. Januar 2026): „Abwesenheit über 14 h“ = Spalte „Abwesenheitsdauer über 8 Stunden“ der Liste, „Abwesenheit über 24 h“ = Spalte „Abwesenheitsdauer von mindestens 24 Stunden“. Für „Deutschland (Inland)“ werden 14 € (über 14 h) und 28 € (über 24 h) angezeigt; sie stehen in `app.js`, nicht in `orte.js`. Die Beträge sind nur eine Anzeige und werden nicht automatisch in die Tabelle übernommen.
-- Die Stunden einer Verpflegungszeile ergeben sich aus Uhrzeit von/bis. Liegt „bis“ vor „von“, läuft die Zeit über Mitternacht.
+- Spesenabrechnung, Tabelle 1: je Zeile Datum, Auswahl „über 14 Std.“ / „über 24 Std.“, Ankreuzfelder Frühstück (20 %), Mittagessen (40 %), Abendessen (40 %) und Betrag. Der Betrag wird berechnet: Satz des gewählten Ortes / Landes für „über 14“ bzw. „über 24“, davon werden die Prozentsätze der angekreuzten Mahlzeiten abgezogen (nicht unter 0). Ohne Ort / Land bleibt der Betrag leer.
+- Der Bereich „Bei Bewirtung: Geldwerter Vorteil …“ (Verrechnung / Versteuerung) ist in Spesenabrechnung und Abrechnung gegen Beleg entfallen.
+- Abrechnung gegen Beleg und Eigenbeleg: Währung € oder $ je Vorlage wählbar. Abrechnung gegen Beleg: je Zeile Art FA (Firmenausgaben) oder PA (Privatausgelegt) hinter dem Betrag; „Überweisung“ = Summe aller PA-Zeilen; darunter „Firmenausgaben (FA)“ = Summe aller FA-Zeilen; Zeilen ohne Art zählen in keiner Summe. Darunter steht die Erklärung der Kürzel.
 - Verpflegungsmehraufwand wird nur innerhalb der ersten drei Monate auf einer neuen Werft erstattet (Hinweis der Vorlage).
 - Kilometergeld = Summe der Kilometer × 0,30 €.
 - Summe der Spesenabrechnung = Summe Verpflegungsmehraufwand + Summe sonstige pauschale Erstattungen (LA 9976, steuerfrei).
-- Summe der Abrechnung gegen Beleg = Summe aller Auslagen. Sie wird überwiesen.
+- Summe der Abrechnung gegen Beleg (Überweisung) = nur privat ausgelegte Beträge (PA).
 - Summe des Eigenbelegs = Summe aller Ausgaben ohne Beleg.
-- Bewirtung zählt für Frühstück mit 20 %, für Mittag- und Abendessen mit je 40 %.
+- Mahlzeitenabzug: Frühstück 20 %, Mittag- und Abendessen je 40 % vom Betrag der Zeile (Vorgabe des Auftraggebers; steuerrechtlich wird üblicherweise vom Tagessatz für 24 Stunden gekürzt).
 - Zeilenlimits je Vorlage: Verpflegung 20, sonstige Pauschalen 2, Auslagen 17, Fahrten 11, Eigenbeleg 12.
 - Montagebericht: Pflicht sind Kunde und Unterschrift Monteur. Die Unterschrift des Auftraggebers ist freiwillig, der Export geht auch ohne sie. Name und Projektname gelten hier nicht, der Name steht je Zeile in der Tabelle.
 - Montagebericht: Vor dem Export werden die Textfelder (Bemerkung, ausgeführte Arbeiten, Fotobemerkungen) auf Fehler geprüft. Der Export ist trotz Hinweisen möglich.
@@ -37,6 +39,5 @@ Begriffe stehen in `GLOSSARY.md`.
 - `orte.js` enthält Länder, Orte und die zwei Pauschbeträge je Eintrag (214 Zeilen, 166 Länder), von Hand aus den Seiten der PDF-Übersicht übertragen und mit der 2/3-Regel (über 8 h ≈ 2/3 von 24 h) sowie einer Sichtprüfung kontrolliert. Länder und Orte stehen in allen Sprachen auf Deutsch. Beträge der Übernachtung sind nicht enthalten.
 - Die Bezeichnung „über 14 h“ folgt der Vorgabe des Auftraggebers; die Spalte der Liste gilt rechtlich ab mehr als 8 Stunden Abwesenheit.
 - Die Inlandsbeträge 14 € und 28 € sind fest in `app.js` hinterlegt, weil die Liste sie nicht enthält.
-- Die Beträge der Tabelle werden weiterhin von Hand eingetragen.
-- Die Prozentwerte der Bewirtung werden nur dokumentiert, nicht in Euro umgerechnet.
+- Alte JSON-Dateien: Uhrzeiten und handgeschriebene Beträge der Spesen-Tabelle 1 werden nicht übernommen, weil die Tabelle neu aufgebaut ist.
 - Der Aufbau von `GLOSSARY.md` folgt der Konvention aus dem Commit `d80fa0f` im Repository `mattpocock/skills`. Die Dateien `SKILL.md` und `GLOSSARY-FORMAT.md` des Skills konnten nicht gelesen werden, das genaue Format ist daher nicht abgeglichen.

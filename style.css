@@ -174,10 +174,18 @@ body {
   display: block; width: 100%; height: 24px; padding: 3px 5px;
 }
 .grid td output { line-height: 18px; }
+.grid td select { display: block; width: 100%; height: 24px; padding: 2px 4px; font: inherit; color: inherit; background: transparent; border: 0; border-radius: 0; margin: 0; }
+.grid td.ck { text-align: center; }
+.grid td input[type=checkbox] { display: block; width: 16px; height: 16px; margin: 4px auto; padding: 0; accent-color: #143868; }
+.need-dest { color: #b61f52; }
+.p-total.sub { margin-top: 6px; }
+.legend { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: 12px; }
+.legend output { font-weight: 700; font-variant-numeric: tabular-nums; }
 .grid .num, .grid input.num { text-align: right; font-variant-numeric: tabular-nums; }
 .grid tfoot td { border-left: 0; border-bottom: 0; }
 .grid tfoot td.noprint { border: 0; }
 .grid tfoot td.sum { border: 1px solid #000; border-bottom: 3px double #000; font-weight: 700; padding: 3px 5px; text-align: right; }
+.s-date { width: 19%; } .s-std { width: 19%; } .s-ck { width: 13%; } .s-amt { width: 19%; } .c-kind { width: 11%; }
 .m-date { width: 24%; } .m-time { width: 18%; } .m-hrs { width: 16%; } .m-amt { width: 24%; }
 .c-date { width: 17%; } .c-time { width: 12.5%; } .c-hrs { width: 9%; }
 .c-amt { width: 15%; } .c-km { width: 16%; } .c-rm { width: 30px; }
@@ -217,15 +225,6 @@ body {
 .km-row output.eur { border-top: 1px solid #000; border-bottom: 3px double #000; }
 .km-row.strong { font-weight: 700; }
 
-.hosp {
-  margin-top: 24px; border: 1px solid #143868; border-radius: 10px; padding: 10px 14px;
-  display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 12px; font-size: 12px;
-}
-.hosp p { margin: 0 0 2px; }
-.cnt, .opt { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
-.cnt input { width: 46px; border-bottom: 1px solid #000; padding: 1px 3px; }
-.hosp-r { align-self: end; }
-.opt { align-items: flex-start; }
 
 .p-sign { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 32px; margin-top: 46px; }
 .sg { display: grid; gap: 2px; }
@@ -275,6 +274,10 @@ body {
     height: 44px; padding: 8px 10px; font-size: 16px; line-height: 26px;
     border: 1px solid #aab3bf; border-radius: 6px; background: #fff;
   }
+  .grid td select { height: 44px; padding: 8px 10px; font-size: 16px; border: 1px solid #aab3bf; border-radius: 6px; background: #fff; }
+  .grid td.ck { display: flex; align-items: center; gap: 10px; }
+  .grid td.ck[data-label]::before { margin: 0; order: 2; font-size: 14px; text-align: left; }
+  .grid td input[type=checkbox] { width: 26px; height: 26px; margin: 0; flex: none; }
   .grid td.c-rm { width: auto; padding: 0; align-self: end; justify-self: end; }
   .rm { width: 44px; height: 44px; font-size: 22px; }
   .paper input[type=date], .paper input[type=time] {
@@ -294,9 +297,9 @@ body {
   .grid.eb tfoot td.sum { border-top: 1.5px solid #000; border-bottom: 3px double #000; }
   .grid tfoot td.tl { display: block; align-self: center; margin-right: 12px; font-weight: 700; }
 
-  .r-meal  { grid-template-areas: "date date" "from to" "hrs amount" "rm rm"; }
+  .r-meal  { grid-template-areas: "date std" "mb ml" "md amount" "rm rm"; }
   .r-other { grid-template-areas: "period period" "text text" "amount rm"; }
-  .r-beleg { grid-template-areas: "date date" "text text" "amount rm"; }
+  .r-beleg { grid-template-areas: "date date" "text text" "amount kind" "rm rm"; }
   .r-km    { grid-template-areas: "date date" "dest dest" "km rm"; }
   .r-eigen { grid-template-areas: "date date" "text text" "amount rm"; }
   td[data-c="date"] { grid-area: date; }
@@ -308,6 +311,11 @@ body {
   td[data-c="text"] { grid-area: text; }
   td[data-c="dest"] { grid-area: dest; }
   td[data-c="amount"] { grid-area: amount; }
+  td[data-c="std"] { grid-area: std; }
+  td[data-c="mb"] { grid-area: mb; }
+  td[data-c="ml"] { grid-area: ml; }
+  td[data-c="md"] { grid-area: md; }
+  td[data-c="kind"] { grid-area: kind; }
   td[data-c="km"] { grid-area: km; }
   td[data-c="rm"] { grid-area: rm; }
 
@@ -321,10 +329,6 @@ body {
   .km-row > span:empty { display: none; }
   .km-row output { min-width: 150px; margin-left: auto; font-size: 16px; }
 
-  .hosp { grid-template-columns: minmax(0, 1fr); }
-  .cnt input { width: 64px; height: 40px; text-align: center; font-size: 16px; border: 1px solid #aab3bf; border-radius: 6px; }
-  .opt { padding: 6px 0; }
-  .opt input { width: 22px; height: 22px; flex: none; }
 
   .p-sign { flex-direction: column; align-items: stretch; gap: 26px; }
   .sg-date, .sg-sig, .sg-city { width: 100%; }
@@ -351,10 +355,10 @@ body {
   .paper input[type=date]::-webkit-calendar-picker-indicator,
   .paper input[type=time]::-webkit-calendar-picker-indicator { display: none; }
   .paper input[data-empty]::-webkit-datetime-edit { opacity: 0; }
-  .grid th, .grid.cyan th, .plate-h, .hosp {
+  .grid th, .grid.cyan th, .plate-h {
     -webkit-print-color-adjust: exact; print-color-adjust: exact;
   }
-  .grid tr, .hosp, .p-sign { break-inside: avoid; }
+  .grid tr, .legend, .p-sign { break-inside: avoid; }
 }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
@@ -439,7 +443,6 @@ dialog#dlg h3 { margin: 16px 0 6px; font-size: 15px; }
   .eb-sign { margin-top: 22px; }
   .sg-top { height: 54px; }
   .sg-top img { max-height: 54px; }
-  .hosp { margin-top: 14px; }
   .p-sec { margin-top: 16px; }
   .p-total { margin-top: 12px; }
   .p-logo { margin-bottom: 4mm; }
