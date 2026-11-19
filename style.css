@@ -178,7 +178,6 @@ body {
 .grid td.ck { text-align: center; }
 .grid td input[type=checkbox] { display: block; width: 16px; height: 16px; margin: 4px auto; padding: 0; accent-color: #143868; }
 .need-dest { color: #b61f52; }
-.p-total.sub { margin-top: 6px; }
 .legend { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: 12px; }
 .legend output { font-weight: 700; font-variant-numeric: tabular-nums; }
 .grid .num, .grid input.num { text-align: right; font-variant-numeric: tabular-nums; }

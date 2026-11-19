@@ -9,11 +9,11 @@ Begriffe stehen in `GLOSSARY.md`.
 - Unter der Auswahl stehen die Pauschbeträge des gewählten Landes bzw. Ortes (Auslandspauschalen ab 1. Januar 2026): „Abwesenheit über 14 h“ = Spalte „Abwesenheitsdauer über 8 Stunden“ der Liste, „Abwesenheit über 24 h“ = Spalte „Abwesenheitsdauer von mindestens 24 Stunden“. Für „Deutschland (Inland)“ werden 14 € (über 14 h) und 28 € (über 24 h) angezeigt; sie stehen in `app.js`, nicht in `orte.js`. Die Beträge sind nur eine Anzeige und werden nicht automatisch in die Tabelle übernommen.
 - Spesenabrechnung, Tabelle 1: je Zeile Datum, Auswahl „über 14 Std.“ / „über 24 Std.“, Ankreuzfelder Frühstück (20 %), Mittagessen (40 %), Abendessen (40 %) und Betrag. Der Betrag wird berechnet: Satz des gewählten Ortes / Landes für „über 14“ bzw. „über 24“, davon werden die Prozentsätze der angekreuzten Mahlzeiten abgezogen (nicht unter 0). Ohne Ort / Land bleibt der Betrag leer.
 - Der Bereich „Bei Bewirtung: Geldwerter Vorteil …“ (Verrechnung / Versteuerung) ist in Spesenabrechnung und Abrechnung gegen Beleg entfallen.
-- Abrechnung gegen Beleg und Eigenbeleg: Währung € oder $ je Vorlage wählbar. Abrechnung gegen Beleg: je Zeile Art FA (Firmenausgaben) oder PA (Privatausgelegt) hinter dem Betrag; „Überweisung“ = Summe aller PA-Zeilen; darunter „Firmenausgaben (FA)“ = Summe aller FA-Zeilen; Zeilen ohne Art zählen in keiner Summe. Darunter steht die Erklärung der Kürzel.
+- Abrechnung gegen Beleg und Eigenbeleg: Währung € oder $ je Vorlage wählbar. Abrechnung gegen Beleg: je Zeile Art FA (Firmenausgaben) oder PA (Privatausgelegt) hinter dem Betrag; unter der Summe stehen die Kürzel mit den Teilsummen FA und PA.
 - Verpflegungsmehraufwand wird nur innerhalb der ersten drei Monate auf einer neuen Werft erstattet (Hinweis der Vorlage).
 - Kilometergeld = Summe der Kilometer × 0,30 €.
 - Summe der Spesenabrechnung = Summe Verpflegungsmehraufwand + Summe sonstige pauschale Erstattungen (LA 9976, steuerfrei).
-- Summe der Abrechnung gegen Beleg (Überweisung) = nur privat ausgelegte Beträge (PA).
+- Summe der Abrechnung gegen Beleg = Summe aller Auslagen. Sie wird überwiesen.
 - Summe des Eigenbelegs = Summe aller Ausgaben ohne Beleg.
 - Mahlzeitenabzug: Frühstück 20 %, Mittag- und Abendessen je 40 % vom Betrag der Zeile (Vorgabe des Auftraggebers; steuerrechtlich wird üblicherweise vom Tagessatz für 24 Stunden gekürzt).
 - Zeilenlimits je Vorlage: Verpflegung 20, sonstige Pauschalen 2, Auslagen 17, Fahrten 11, Eigenbeleg 12.

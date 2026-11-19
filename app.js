@@ -65,7 +65,6 @@
         colDate: 'Datum', colTime: 'Uhrzeit', colFrom: 'von', colTo: 'bis', colHours: 'Anz. Std.', colPlace: 'Ort', colAmount: 'Betrag €',
         spS2: '2) Sonstige pauschale Kostenerstattungen',
         spS2Note: 'z.B. pauschale Erstattung von Telefonkosten, Unterkunft, etc.',
-        faTotal: 'Firmenausgaben (FA)',
         colStd: 'Std. ü. 14 / 24', std14: 'über 14 Std.', std24: 'über 24 Std.', colB: 'Frühstück je 20%', colL: 'Mittagessen je 40%', colD: 'Abendessen je 40%', colKind: 'Art', curLabel: 'Währung:', curEur: '€ (Euro)', curUsd: '$ (US-Dollar)', legTitle: 'Kürzel:', legFA: 'FA = Firmenausgaben', legPA: 'PA = Privatausgelegt', needDest: 'Bitte oben Ort / Land wählen, damit die Beträge berechnet werden.',
         colPeriod: 'Zeitraum', colText: 'Text',
         spTotal: 'Summe pauschale Kosten / Erstattung mit Lohnabrechnung:', spLa: 'LA 9976) stfr',
@@ -116,7 +115,6 @@
         colDate: 'Date', colTime: 'Time', colFrom: 'from', colTo: 'to', colHours: 'Hours', colPlace: 'Place', colAmount: 'Amount €',
         spS2: '2) Other flat-rate reimbursements',
         spS2Note: 'e.g. flat-rate reimbursement of phone costs, accommodation, etc.',
-        faTotal: 'Company expenses (FA)',
         colStd: 'Hrs over 14 / 24', std14: 'over 14 hrs', std24: 'over 24 hrs', colB: 'Breakfast 20%', colL: 'Lunch 40%', colD: 'Dinner 40%', colKind: 'Type', curLabel: 'Currency:', curEur: '€ (euro)', curUsd: '$ (US dollar)', legTitle: 'Codes:', legFA: 'FA = company expenses', legPA: 'PA = paid privately', needDest: 'Please choose place / country above so the amounts can be calculated.',
         colPeriod: 'Period', colText: 'Description',
         spTotal: 'Total flat-rate costs / reimbursed with payroll:', spLa: 'LA 9976) tax-free',
@@ -167,7 +165,6 @@
         colDate: 'Дата', colTime: 'Время', colFrom: 'с', colTo: 'до', colHours: 'Кол-во ч.', colPlace: 'Место', colAmount: 'Сумма €',
         spS2: '2) Прочие пауш. возмещения расходов',
         spS2Note: 'напр. пауш. возмещение расходов на телефон, проживание и т. д.',
-        faTotal: 'Расходы компании (FA)',
         colStd: 'Ч. свыше 14 / 24', std14: 'свыше 14 ч', std24: 'свыше 24 ч', colB: 'Завтрак 20%', colL: 'Обед 40%', colD: 'Ужин 40%', colKind: 'Вид', curLabel: 'Валюта:', curEur: '€ (евро)', curUsd: '$ (доллар США)', legTitle: 'Обозначения:', legFA: 'FA = расходы компании', legPA: 'PA = оплачено из своих средств', needDest: 'Выберите место / страну выше, чтобы рассчитать суммы.',
         colPeriod: 'Период', colText: 'Текст',
         spTotal: 'Итого пауш. расходы / выплата с зарплатой:', spLa: 'LA 9976) не облагается налогом',
@@ -457,8 +454,9 @@
       '<thead><tr><th>' + esc(f.colDate) + '</th><th>' + esc(f.colText) + '</th><th>' + esc(amtLabel()) + '</th><th>' + esc(f.colKind) + '</th><th class="noprint c-rm"></th></tr></thead>' +
       '<tbody>' + body + '</tbody></table>' + addBtn('beleg') +
       '<div class="p-total"><span>' + esc(f.bePay) + '</span><output id="tot"></output><span class="la"></span></div>' +
-      '<div class="p-total sub"><span>' + esc(f.faTotal) + '</span><output id="fa-sum"></output><span class="la"></span></div>' +
-      '<div class="legend"><b>' + esc(f.legTitle) + '</b> <span>' + esc(f.legFA) + '</span><span>' + esc(f.legPA) + '</span></div>' +
+      '<div class="legend"><b>' + esc(f.legTitle) + '</b> ' +
+      '<span>' + esc(f.legFA) + ': <output id="fa-sum"></output></span>' +
+      '<span>' + esc(f.legPA) + ': <output id="pa-sum"></output></span></div>' +
       signBlock(true);
   }
 
@@ -692,8 +690,9 @@
         if (r.kind === 'FA') fa += parseNum(r.amount);
         else if (r.kind === 'PA') pa += parseNum(r.amount);
       });
-      setOut('tot', fmtMoney(Math.round(pa * 100) / 100));
+      setOut('tot', fmtMoney(sum(state.beleg, 'amount')));
       setOut('fa-sum', fmtMoney(Math.round(fa * 100) / 100));
+      setOut('pa-sum', fmtMoney(Math.round(pa * 100) / 100));
     } else if (state.type === 'eigen') {
       setOut('tot', fmtMoney(sum(state.eigen, 'amount')));
     } else {
