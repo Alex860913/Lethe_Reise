@@ -4,8 +4,8 @@
   var KM_RATE = 0.30;
   var LOCALES = { de: 'de-DE', en: 'en-GB', ru: 'ru-RU' };
   var LANG_NAMES = { de: 'Deutsch', en: 'English', ru: 'Kyrillisch' };
-  var TYPES = ['montage', 'spesen', 'beleg', 'eigen', 'km'];
-  var FILE_NAMES = { spesen: 'Spesenabrechnung', beleg: 'Abrechnung_gegen_Beleg', km: 'KM-Abrechnung', eigen: 'Eigenbeleg', montage: 'Montagebericht' };
+  var TYPES = ['montage', 'spesen', 'beleg', 'eigen', 'bew', 'km'];
+  var FILE_NAMES = { spesen: 'Spesenabrechnung', beleg: 'Abrechnung_gegen_Beleg', km: 'KM-Abrechnung', eigen: 'Eigenbeleg', bew: 'Bewirtungsbeleg', montage: 'Montagebericht' };
   var LIMITS = { meal: 20, other: 2, beleg: 17, km: 11, eigen: 12, mrow: 14 };
   var START = { meal: 6, other: 2, beleg: 8, km: 6, eigen: 12, mrow: 8 };
   var MAX_PHOTOS = 30, PHOTO_PX = 1600;
@@ -17,7 +17,7 @@
     beleg: function () { return { date: '', text: '', amount: '', kind: '' }; },
     km: function () { return { date: '', dest: '', km: '' }; },
     eigen: function () { return { date: '', text: '', amount: '' }; },
-    mrow: function () { return { date: '', name: '', work: '', travel: '', extra: '' }; }
+    mrow: function () { return { date: '', name: '', from: '', to: '', work: '', travel: '', extra: '' }; }
   };
   var PHOTO_RE = /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+\/=]+$/;
   var SIG_RE = /^data:image\/png;base64,[A-Za-z0-9+\/=]+$/;
@@ -55,7 +55,7 @@
         mDouble: 'Wort doppelt: „%1“', mSpace2: 'Doppeltes Leerzeichen', mSpaceBefore: 'Leerzeichen vor dem Satzzeichen', mSpaceAfter: 'Leerzeichen nach dem Satzzeichen fehlt',
         mCapital: 'Satz beginnt mit Kleinbuchstaben', mNoEnd: 'Satz endet ohne Satzzeichen', mPunct: 'Satzzeichen doppelt', mBracket: 'Klammer oder Anführungszeichen nicht geschlossen',
         mTypo: 'Schreibweise: „%1“ → „%2“', mComma: 'Vor „%1“ fehlt vermutlich ein Komma', mLong: 'Sehr langer Satz (über 40 Wörter), besser teilen', mI: '„i“ als Wort bitte groß schreiben (I)',
-        t: { spesen: 'Spesenabrechnung', beleg: 'Abrechnung gegen Beleg', km: 'KM-Abrechnung', eigen: 'Eigenbeleg', montage: 'Montagebericht' }
+        t: { spesen: 'Spesenabrechnung', beleg: 'Abrechnung gegen Beleg', km: 'KM-Abrechnung', eigen: 'Eigenbeleg', bew: 'Bewirtungsbeleg', montage: 'Montagebericht' }
       },
       f: {
         name: 'Name:', occasion: 'Projektname / Vorgang:', date: 'Datum', signature: 'Unterschrift Mitarbeiter',
@@ -65,6 +65,7 @@
         colDate: 'Datum', colTime: 'Uhrzeit', colFrom: 'von', colTo: 'bis', colHours: 'Anz. Std.', colPlace: 'Ort', colAmount: 'Betrag €',
         spS2: '2) Sonstige pauschale Kostenerstattungen',
         spS2Note: 'z.B. pauschale Erstattung von Telefonkosten, Unterkunft, etc.',
+        bwTitle: 'Bewirtungskosten', bwIntro: 'Angaben zum Nachweis der Höhe und der geschäftlichen Veranlassung von Bewirtungsaufwendungen (§ 4 Abs. 5 Nr. 2 EStG).', bwTag: 'Tag der Bewirtung:', bwOrt: 'Ort der Bewirtung (Name, Anschrift):', bwAnlass: 'Anlass der Bewirtung:', bwPers: 'Bewirtete Personen:', bwHoehe: 'Höhe der Aufwendungen lt. beigefügter Rechnung:', bwRech: 'Rechnungsbetrag', bwTip: 'Trinkgeld', bwSign: 'Unterschrift des Gastgebers',
         colStd: 'Std. ü. 14 / 24', std14: 'über 14 Std.', std24: 'über 24 Std.', colB: 'Frühstück je 20%', colL: 'Mittagessen je 40%', colD: 'Abendessen je 40%', colKind: 'Art', curLabel: 'Währung:', curEur: '€ (Euro)', curUsd: '$ (US-Dollar)', legTitle: 'Kürzel:', legFA: 'FA = Firmenausgaben', legPA: 'PA = Privatausgelegt', needDest: 'Bitte oben Ort / Land wählen, damit die Beträge berechnet werden.',
         colPeriod: 'Zeitraum', colText: 'Text',
         spTotal: 'Summe pauschale Kosten / Erstattung mit Lohnabrechnung:', spLa: 'LA 9976) stfr',
@@ -105,7 +106,7 @@
         mDouble: 'Word repeated: “%1”', mSpace2: 'Double space', mSpaceBefore: 'Space before punctuation mark', mSpaceAfter: 'Space after punctuation mark missing',
         mCapital: 'Sentence starts with a lowercase letter', mNoEnd: 'Sentence has no closing punctuation', mPunct: 'Punctuation repeated', mBracket: 'Bracket or quotation mark not closed',
         mTypo: 'Spelling: “%1” → “%2”', mComma: 'A comma may be missing before “%1”', mLong: 'Very long sentence (over 40 words), consider splitting', mI: 'The word “i” should be capitalised (I)',
-        t: { spesen: 'Flat-rate allowances', beleg: 'Reimbursement against receipts', km: 'Mileage claim', eigen: 'Self-issued receipt', montage: 'Assembly report' }
+        t: { spesen: 'Flat-rate allowances', beleg: 'Reimbursement against receipts', km: 'Mileage claim', eigen: 'Self-issued receipt', bew: 'Hospitality receipt', montage: 'Assembly report' }
       },
       f: {
         name: 'Name:', occasion: 'Project name / reference:', date: 'Date', signature: 'Employee signature',
@@ -115,6 +116,7 @@
         colDate: 'Date', colTime: 'Time', colFrom: 'from', colTo: 'to', colHours: 'Hours', colPlace: 'Place', colAmount: 'Amount €',
         spS2: '2) Other flat-rate reimbursements',
         spS2Note: 'e.g. flat-rate reimbursement of phone costs, accommodation, etc.',
+        bwTitle: 'Hospitality expenses', bwIntro: 'Details proving the amount and the business reason of hospitality expenses (§ 4 para. 5 no. 2 German Income Tax Act).', bwTag: 'Date of hospitality:', bwOrt: 'Place of hospitality (name, address):', bwAnlass: 'Occasion:', bwPers: 'Persons entertained:', bwHoehe: 'Amount according to the attached invoice:', bwRech: 'Invoice amount', bwTip: 'Tip', bwSign: 'Signature of the host',
         colStd: 'Hrs over 14 / 24', std14: 'over 14 hrs', std24: 'over 24 hrs', colB: 'Breakfast 20%', colL: 'Lunch 40%', colD: 'Dinner 40%', colKind: 'Type', curLabel: 'Currency:', curEur: '€ (euro)', curUsd: '$ (US dollar)', legTitle: 'Codes:', legFA: 'FA = company expenses', legPA: 'PA = paid privately', needDest: 'Please choose place / country above so the amounts can be calculated.',
         colPeriod: 'Period', colText: 'Description',
         spTotal: 'Total flat-rate costs / reimbursed with payroll:', spLa: 'LA 9976) tax-free',
@@ -155,7 +157,7 @@
         mDouble: 'Слово повторяется: «%1»', mSpace2: 'Двойной пробел', mSpaceBefore: 'Пробел перед знаком препинания', mSpaceAfter: 'Нет пробела после знака препинания',
         mCapital: 'Предложение начинается со строчной буквы', mNoEnd: 'Предложение без знака в конце', mPunct: 'Знак препинания повторяется', mBracket: 'Скобка или кавычка не закрыта',
         mTypo: 'Написание: «%1» → «%2»', mComma: '', mLong: 'Очень длинное предложение (более 40 слов), лучше разделить', mI: '',
-        t: { spesen: 'Суточные и пауш. расходы', beleg: 'Возмещение по чекам', km: 'Возмещение за километраж', eigen: 'Собственный документ (без чека)', montage: 'Монтажный отчёт' }
+        t: { spesen: 'Суточные и пауш. расходы', beleg: 'Возмещение по чекам', km: 'Возмещение за километраж', eigen: 'Собственный документ (без чека)', bew: 'Чек на представительские расходы', montage: 'Монтажный отчёт' }
       },
       f: {
         name: 'ФИО:', occasion: 'Название проекта / дело:', date: 'Дата', signature: 'Подпись сотрудника',
@@ -165,6 +167,7 @@
         colDate: 'Дата', colTime: 'Время', colFrom: 'с', colTo: 'до', colHours: 'Кол-во ч.', colPlace: 'Место', colAmount: 'Сумма €',
         spS2: '2) Прочие пауш. возмещения расходов',
         spS2Note: 'напр. пауш. возмещение расходов на телефон, проживание и т. д.',
+        bwTitle: 'Представительские расходы', bwIntro: 'Данные для подтверждения размера и деловой причины представительских расходов (§ 4 абз. 5 п. 2 EStG).', bwTag: 'Дата мероприятия:', bwOrt: 'Место (название, адрес):', bwAnlass: 'Повод:', bwPers: 'Приглашённые лица:', bwHoehe: 'Сумма согласно приложенному счёту:', bwRech: 'Сумма счёта', bwTip: 'Чаевые', bwSign: 'Подпись принимающей стороны',
         colStd: 'Ч. свыше 14 / 24', std14: 'свыше 14 ч', std24: 'свыше 24 ч', colB: 'Завтрак 20%', colL: 'Обед 40%', colD: 'Ужин 40%', colKind: 'Вид', curLabel: 'Валюта:', curEur: '€ (евро)', curUsd: '$ (доллар США)', legTitle: 'Обозначения:', legFA: 'FA = расходы компании', legPA: 'PA = оплачено из своих средств', needDest: 'Выберите место / страну выше, чтобы рассчитать суммы.',
         colPeriod: 'Период', colText: 'Текст',
         spTotal: 'Итого пауш. расходы / выплата с зарплатой:', spLa: 'LA 9976) не облагается налогом',
@@ -198,8 +201,9 @@
     lang: 'de', type: 'montage',
     name: '', occasion: '', dest: '', city: '', date: localToday(), sig: null, plate: '',
     meal: makeRows('meal'), other: makeRows('other'), beleg: makeRows('beleg'), km: makeRows('km'), eigen: makeRows('eigen'),
-    cur: { beleg: 'EUR', eigen: 'EUR' },
+    cur: { beleg: 'EUR', eigen: 'EUR', bew: 'EUR' },
     mrow: makeRows('mrow'), sigCust: null,
+    bew: { tag: '', ort: '', anlass: '', personen: '', rechnung: '', trinkgeld: '' },
     mo: { vorgang: '', kunde: '', ort: '', schiff: '', zeitraum: '', liefer: false, montage: true, arbeiten: '', bemerkung: '' },
     mofotos: []
   };
@@ -257,6 +261,15 @@
     if (m < 0) m += 1440;
     return m / 60;
   }
+  /* Arbeitszeit: Ende minus Start, davon Pausen abgezogen: über 2:15 h = 15 min, über 6:30 h = weitere 15 min, über 9:00 h = weitere 15 min. */
+  function netHours(from, to) {
+    if (!from || !to) return '';
+    var a = from.split(':'), b = to.split(':');
+    var m = (+b[0] * 60 + +b[1]) - (+a[0] * 60 + +a[1]);
+    if (m < 0) m += 1440;
+    var pause = (m > 135 ? 15 : 0) + (m > 390 ? 15 : 0) + (m > 540 ? 15 : 0);
+    return (m - pause) / 60;
+  }
   function setOut(id, text) {
     var el = paperEl.querySelector('#' + id);
     if (el) el.textContent = text;
@@ -280,7 +293,7 @@
   /* ---------- Montagebericht: Beschriftungen (nach der Vorlage „Stundennachweis / Service Report“) ---------- */
   var MO = {
     de: { title: 'Stundennachweis', vorgang: 'Vorgangs-Nr.', kunde: 'Kunde', ort: 'Einsatzort', schiff: 'Projekt Schiff', zeitraum: 'Zeitraum',
-      liefer: 'Lieferschein', montage: 'Montagebericht', cDate: 'Datum', cName: 'Name', cWork: 'Arbeitszeit', cTravel: 'Reisezeit', cExtra: 'Mehrarbeit',
+      liefer: 'Lieferschein', montage: 'Montagebericht', cDate: 'Datum', cName: 'Name', cFrom: 'Startzeit', cTo: 'Endzeit', cHrs: 'Std.', cWork: 'Arbeitszeit', cTravel: 'Reisezeit', cExtra: 'Mehrarbeit',
       remarks: 'Bemerkung', activities: 'Ausgeführte Arbeiten', sigTech: 'Unterschrift Monteur', date: 'Datum', sigClient: 'Unterschrift Auftraggeber',
       tbar: 'Textformat', fBold: 'Fett', fItalic: 'Kursiv', fUnder: 'Unterstrichen', fStrike: 'Durchgestrichen', fUl: 'Aufzählung', fOl: 'Nummerierung', fClear: 'Formatierung entfernen',
       photos: 'Fotos', addPhoto: 'Fotos hinzufügen', photoRemark: 'Bemerkung zum Foto', rmPhoto: 'Foto entfernen',
@@ -288,14 +301,14 @@
         'Die Richtigkeit der Arbeitszeit und der Materialien wird bestätigt. Die aufgeführten Leistungen werden hiermit bescheinigt und abgenommen. Wegzeit zählt mit.',
         'Die Ware bleibt bis zur restlosen Bezahlung Eigentum der Lethe Exterior Doors GmbH.'] },
     en: { title: 'Service Report', vorgang: 'Case no.', kunde: 'Customer', ort: 'Place of work', schiff: 'Project vessel', zeitraum: 'Period',
-      liefer: 'Delivery note', montage: 'Assembly report', cDate: 'Date', cName: 'Name', cWork: 'Time of work', cTravel: 'Travel time', cExtra: 'Extra work',
+      liefer: 'Delivery note', montage: 'Assembly report', cDate: 'Date', cName: 'Name', cFrom: 'Start time', cTo: 'End time', cHrs: 'Hrs', cWork: 'Time of work', cTravel: 'Travel time', cExtra: 'Extra work',
       remarks: 'Remarks', activities: 'Activities carried out', sigTech: 'Signature of technician', date: 'Date', sigClient: 'Signature of client',
       tbar: 'Text format', fBold: 'Bold', fItalic: 'Italic', fUnder: 'Underline', fStrike: 'Strikethrough', fUl: 'Bulleted list', fOl: 'Numbered list', fClear: 'Clear formatting',
       photos: 'Photos', addPhoto: 'Add photos', photoRemark: 'Remark on photo', rmPhoto: 'Remove photo',
       legal: ['Our technicians are advised to perform the work quick and precise. Working hours on weekends and official holidays as well as premium rates are calculated according to the tariff in force.',
         'Correctness of working times and materials is confirmed. Herewith the performed service is confirmed and approved. Travel times to be added. Unless fully paid the goods shall remain our property of Lethe Exterior Doors GmbH.'] },
     ru: { title: 'Табель рабочего времени', vorgang: 'Номер дела', kunde: 'Заказчик', ort: 'Место работ', schiff: 'Проект (судно)', zeitraum: 'Период',
-      liefer: 'Накладная', montage: 'Монтажный отчёт', cDate: 'Дата', cName: 'Имя', cWork: 'Время работы', cTravel: 'Время в пути', cExtra: 'Сверхурочные',
+      liefer: 'Накладная', montage: 'Монтажный отчёт', cDate: 'Дата', cName: 'Имя', cFrom: 'Начало', cTo: 'Конец', cHrs: 'Ч.', cWork: 'Время работы', cTravel: 'Время в пути', cExtra: 'Сверхурочные',
       remarks: 'Примечание', activities: 'Выполненные работы', sigTech: 'Подпись монтажника', date: 'Дата', sigClient: 'Подпись заказчика',
       tbar: 'Формат текста', fBold: 'Жирный', fItalic: 'Курсив', fUnder: 'Подчёркнутый', fStrike: 'Зачёркнутый', fUl: 'Маркированный список', fOl: 'Нумерованный список', fClear: 'Убрать форматирование',
       photos: 'Фото', addPhoto: 'Добавить фото', photoRemark: 'Примечание к фото', rmPhoto: 'Удалить фото', legal: null }
@@ -460,6 +473,30 @@
       signBlock(true);
   }
 
+  function bwBox(cls, label, inner) {
+    return '<div class="bw-c ' + cls + '"><div class="bw-h">' + esc(label) + '</div>' + inner + '</div>';
+  }
+  function paperBew() {
+    var f = T().f, b = state.bew, img = state.sig ? '<img src="' + esc(state.sig) + '" alt="">' : '';
+    var money = function (field, label) {
+      return '<div class="bw-m"><span>' + esc(label) + '</span><input type="text" class="num" inputmode="decimal" data-k="bew" data-f="' + field + '" value="' + esc(b[field]) +
+        '" aria-label="' + esc(label) + '"><b>' + esc(curSym()) + '</b></div>';
+    };
+    return '<h2 class="p-title">' + esc(f.bwTitle) + '</h2><p class="bw-intro">' + esc(f.bwIntro) + '</p>' +
+      '<div class="p-meta">' + curSelect() + '</div>' +
+      '<div class="bw">' +
+      bwBox('half', f.bwTag, '<input type="date" data-k="bew" data-f="tag" value="' + esc(b.tag) + '" aria-label="' + esc(f.bwTag) + '">') +
+      bwBox('half', f.bwOrt, moArea('bew', 'ort', null, b.ort, f.bwOrt, 3)) +
+      bwBox('full', f.bwAnlass, moArea('bew', 'anlass', null, b.anlass, f.bwAnlass, 3)) +
+      bwBox('full', f.bwPers, moArea('bew', 'personen', null, b.personen, f.bwPers, 6)) +
+      bwBox('full', f.bwHoehe, '<div class="bw-money">' + money('rechnung', f.bwRech) + money('trinkgeld', f.bwTip) + '</div>') +
+      '</div>' +
+      '<div class="p-sign eb-sign">' +
+      '<div class="sg sg-city"><div class="sg-top"><input type="text" id="f-city" data-k="city" value="' + esc(state.city) + '" aria-label="' + esc(f.eiPlace) + '"></div><div class="sg-line"></div><span>' + esc(f.eiPlace) + '</span></div>' +
+      '<div class="sg sg-date"><div class="sg-top"><input type="date" id="f-date" data-k="date" value="' + esc(state.date) + '" aria-label="' + esc(f.eiDate) + '"></div><div class="sg-line"></div><span>' + esc(f.eiDate) + '</span></div>' +
+      '<div class="sg sg-sig"><div class="sg-top">' + img + '</div><div class="sg-line"></div><span>' + esc(f.bwSign) + '</span></div></div>';
+  }
+
   function paperKm() {
     var f = T().f;
     var body = state.km.map(function (r, i) {
@@ -576,12 +613,17 @@
     var m = state.mo, f = T().f;
     m.zeitraum = zeitraumText();
     var rows = state.mrow.map(function (r, i) {
+      var ck = function (field, key, c) {
+        return '<td class="ck" data-c="' + c + '" data-label="' + esc(L(key)) + '"><input type="checkbox" data-k="mrow" data-i="' + i + '" data-f="' + field + '"' +
+          (r[field] ? ' checked' : '') + ' aria-label="' + esc(L(key)) + '"></td>';
+      };
       return '<tr class="r-mrow">' +
         '<td data-c="date" data-label="' + esc(L('cDate')) + '">' + cell('mrow', i, 'date', 'date', r.date, L('cDate')) + '</td>' +
         '<td data-c="mname" data-label="' + esc(L('cName')) + '">' + cell('mrow', i, 'name', 'text', r.name, L('cName')) + '</td>' +
-        '<td data-c="mwork" data-label="' + esc(L('cWork')) + '">' + cell('mrow', i, 'work', 'text', r.work, L('cWork'), 'num') + '</td>' +
-        '<td data-c="mtravel" data-label="' + esc(L('cTravel')) + '">' + cell('mrow', i, 'travel', 'text', r.travel, L('cTravel'), 'num') + '</td>' +
-        '<td data-c="mextra" data-label="' + esc(L('cExtra')) + '">' + cell('mrow', i, 'extra', 'text', r.extra, L('cExtra'), 'num') + '</td>' + rmCell('mrow', i) + '</tr>';
+        '<td data-c="mfrom" data-label="' + esc(L('cFrom')) + '">' + cell('mrow', i, 'from', 'time', r.from, L('cFrom')) + '</td>' +
+        '<td data-c="mto" data-label="' + esc(L('cTo')) + '">' + cell('mrow', i, 'to', 'time', r.to, L('cTo')) + '</td>' +
+        '<td class="num" data-c="mhrs" data-label="' + esc(L('cHrs')) + '"><output data-mh="' + i + '"></output></td>' +
+        ck('work', 'cWork', 'mwork') + ck('travel', 'cTravel', 'mtravel') + ck('extra', 'cExtra', 'mextra') + rmCell('mrow', i) + '</tr>';
     }).join('');
     var photos = state.mofotos.map(function (ph, i) {
       return '<div class="mo-ph"><img src="' + esc(ph.src) + '" alt="' + esc(L('photos')) + ' ' + (i + 1) + '">' +
@@ -595,8 +637,8 @@
         moLine('kunde', L('kunde') + ':', ' autocomplete="off"') + moLine('ort', L('ort') + ':', ' autocomplete="off"') +
         moLine('schiff', L('schiff') + ':') + moLine('zeitraum', L('zeitraum') + ':', ' readonly id="mo-zeitraum" tabindex="-1"') +
       '</div></div>' +
-      '<table class="grid mo"><colgroup><col class="mc-date"><col class="mc-name"><col class="mc-h"><col class="mc-h"><col class="mc-h"><col class="noprint c-rm"></colgroup>' +
-      '<thead><tr><th>' + esc(L('cDate')) + '</th><th>' + esc(L('cName')) + '</th><th>' + esc(L('cWork')) + '</th><th>' + esc(L('cTravel')) + '</th><th>' + esc(L('cExtra')) +
+      '<table class="grid mo"><colgroup><col class="mc-date"><col class="mc-name"><col class="mc-t"><col class="mc-t"><col class="mc-s"><col class="mc-h"><col class="mc-h"><col class="mc-h"><col class="noprint c-rm"></colgroup>' +
+      '<thead><tr><th>' + esc(L('cDate')) + '</th><th>' + esc(L('cName')) + '</th><th>' + esc(L('cFrom')) + '</th><th>' + esc(L('cTo')) + '</th><th>' + esc(L('cHrs')) + '</th><th>' + esc(L('cWork')) + '</th><th>' + esc(L('cTravel')) + '</th><th>' + esc(L('cExtra')) +
       '</th><th class="noprint c-rm"></th></tr></thead><tbody>' + rows + '</tbody></table>' + addBtn('mrow') +
       '<h3 class="mo-bar">' + esc(L('remarks')) + '</h3>' + moRich('bemerkung', m.bemerkung, L('remarks')) +
       '<h3 class="mo-bar">' + esc(L('activities')) + '</h3>' + moRich('arbeiten', m.arbeiten, L('activities')) +
@@ -662,7 +704,7 @@
   }
 
   function renderPaper() {
-    var build = { spesen: paperSpesen, beleg: paperBeleg, km: paperKm, eigen: paperEigen, montage: paperMontage };
+    var build = { spesen: paperSpesen, beleg: paperBeleg, km: paperKm, eigen: paperEigen, bew: paperBew, montage: paperMontage };
     paperEl.innerHTML = '<div class="p-logo"><img src="' + LOGO + '" alt="LETHE exterior doors"></div>' + build[state.type]();
     syncPrintText();
     calc();
@@ -690,12 +732,18 @@
         if (r.kind === 'FA') fa += parseNum(r.amount);
         else if (r.kind === 'PA') pa += parseNum(r.amount);
       });
-      setOut('tot', fmtMoney(sum(state.beleg, 'amount')));
+      setOut('tot', fmtMoney(Math.round(pa * 100) / 100));
       setOut('fa-sum', fmtMoney(Math.round(fa * 100) / 100));
       setOut('pa-sum', fmtMoney(Math.round(pa * 100) / 100));
     } else if (state.type === 'eigen') {
       setOut('tot', fmtMoney(sum(state.eigen, 'amount')));
-    } else {
+    } else if (state.type === 'montage') {
+      state.mrow.forEach(function (r, i) {
+        var o = paperEl.querySelector('[data-mh="' + i + '"]');
+        var h = netHours(r.from, r.to);
+        if (o) o.textContent = h === '' ? '' : fmtNum(h, 2);
+      });
+    } else if (state.type === 'km') {
       var km = sum(state.km, 'km');
       var eur = Math.round(km * KM_RATE * 100) / 100;
       setOut('km-sum', fmtNum(km, 1) + ' ' + T().f.kmUnit);
@@ -742,6 +790,9 @@
     if (state.type === 'montage') {
       if (!state.mo.kunde.trim()) miss.push(ui.fCustomer);
       if (!state.sig) miss.push(ui.fSigTech);
+    } else if (state.type === 'bew') {
+      if (!state.bew.anlass.trim()) miss.push(T().f.bwAnlass.replace(/:$/, ''));
+      if (!state.sig) miss.push(T().f.bwSign);
     } else {
       if (!state.name.trim()) miss.push(ui.fName);
       if (!state.occasion.trim()) miss.push(ui.fOccasion);
@@ -988,6 +1039,7 @@
       if (!htmlToText(v).trim()) v = '';
     }
     if (el.dataset.i !== undefined) state[k][+el.dataset.i][el.dataset.f] = v;
+    else if (k === 'bew') state.bew[el.dataset.f] = v;
     else if (k === 'cur') { state.cur[el.dataset.t] = v === 'USD' ? 'USD' : 'EUR'; renderPaper(); updateStatus(); return; }
     else if (k === 'mo') state.mo[el.dataset.f] = el.type === 'checkbox' ? el.checked : v;
     else state[k] = v;
@@ -1121,7 +1173,7 @@
       return mp.join('_');
     }
     var parts = [FILE_NAMES[state.type]];
-    var n = slug(state.name);
+    var n = slug(state.type === 'bew' ? state.bew.anlass : state.name);
     if (n) parts.push(n);
     parts.push(state.date || localToday());
     return parts.join('_');
@@ -1194,7 +1246,7 @@
       version: 1, lang: state.lang, type: state.type,
       name: state.name, occasion: state.occasion, dest: state.dest, city: state.city, date: state.date, plate: state.plate,
       meal: state.meal, other: state.other, beleg: state.beleg, km: state.km, eigen: state.eigen,
-      cur: state.cur, sig: state.sig,
+      cur: state.cur, bew: state.bew, sig: state.sig,
       mrow: state.mrow, mo: state.mo, mofotos: state.mofotos, sigCust: state.sigCust
     };
     var json = JSON.stringify(data, null, 2);
@@ -1227,7 +1279,11 @@
       ['b', 'l', 'd'].forEach(function (c) { r[c] = r[c] === '1' ? '1' : ''; });
     });
     state.beleg.forEach(function (r) { r.kind = r.kind === 'FA' || r.kind === 'PA' ? r.kind : ''; });
-    ['beleg', 'eigen'].forEach(function (t) { state.cur[t] = d.cur && d.cur[t] === 'USD' ? 'USD' : 'EUR'; });
+    var bw = d.bew && typeof d.bew === 'object' ? d.bew : {};
+    ['tag', 'rechnung', 'trinkgeld'].forEach(function (k) { state.bew[k] = str(bw[k]); });
+    ['ort', 'anlass', 'personen'].forEach(function (k) { state.bew[k] = typeof bw[k] === 'string' ? bw[k].slice(0, 2000) : ''; });
+    state.mrow.forEach(function (r) { ['work', 'travel', 'extra'].forEach(function (c) { r[c] = r[c] === '1' ? '1' : ''; }); });
+    ['beleg', 'eigen', 'bew'].forEach(function (t) { state.cur[t] = d.cur && d.cur[t] === 'USD' ? 'USD' : 'EUR'; });
     state.dest = destValid(str(d.dest)) ? str(d.dest) : '';
     state.sig = typeof d.sig === 'string' && SIG_RE.test(d.sig) ? d.sig : null;
     state.sigCust = typeof d.sigCust === 'string' && SIG_RE.test(d.sigCust) ? d.sigCust : null;
