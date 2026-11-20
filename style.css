@@ -181,12 +181,10 @@ body {
 .p-total.sub { margin-top: 6px; }
 /* Bewirtungsbeleg */
 .bw-intro { margin: 0 0 4px; font-size: 12px; }
-.bw { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid #000; margin-top: 16px; }
+.bw { display: grid; grid-template-columns: 1fr; border: 1px solid #000; margin-top: 16px; }
 .bw-c { border-top: 1px solid #000; min-width: 0; }
 .bw-c.full { grid-column: 1 / -1; }
-.bw-c.half:nth-child(2) { border-top: 0; }
-.bw-c.half:nth-child(1) { border-top: 0; border-right: 1px solid #000; }
-.bw-c:nth-child(2) { border-top: 0; }
+.bw-c:first-child { border-top: 0; }
 .bw-h { background: #143868; color: #fff; border-bottom: 3px solid #b61f52; padding: 3px 6px; font-size: 12px; }
 .bw-c input[type=date] { display: block; width: 100%; height: 28px; padding: 3px 6px; }
 .bw-c textarea.mo-area { margin: 0; border: 0; border-radius: 0; }
@@ -314,6 +312,7 @@ body {
   .grid.eb tfoot td.sum { border-top: 1.5px solid #000; border-bottom: 3px double #000; }
   .grid tfoot td.tl { display: block; align-self: center; margin-right: 12px; font-weight: 700; }
 
+  .r-bewp  { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "text rm"; }
   .r-meal  { grid-template-areas: "date std" "mb ml" "md amount" "rm rm"; }
   .r-other { grid-template-areas: "period period" "text text" "amount rm"; }
   .r-beleg { grid-template-areas: "date date" "text text" "amount kind" "rm rm"; }
@@ -421,8 +420,6 @@ dialog#dlg h3 { margin: 16px 0 6px; font-size: 15px; }
 
 @media screen and (max-width: 720px) {
   .bw { grid-template-columns: minmax(0, 1fr); }
-  .bw-c.half:nth-child(1) { border-right: 0; }
-  .bw-c:nth-child(2) { border-top: 1px solid #000; }
   .bw-money { grid-template-columns: minmax(0, 1fr); }
   .bw-m + .bw-m { border-left: 0; border-top: 1px solid #000; }
   .bw-m input { height: 44px; font-size: 16px; border: 1px solid #aab3bf; border-radius: 6px; }
@@ -507,3 +504,5 @@ dialog#dlg h3 { margin: 16px 0 6px; font-size: 15px; }
 .pt.rich { white-space: normal; }
 @media (max-width: 720px) { .rte { font-size: 16px; min-height: 96px; } .rtb { min-width: 44px; height: 44px; } }
 @media print { .rte, .rte-bar { display: none !important; } .pt.rich { min-height: 12mm; } }
+
+.foot-note { margin: 18px 0 8px; padding: 8px 12px; font-size: 12px; color: #4a5565; border-top: 1px solid #c9ced6; }

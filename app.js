@@ -6,8 +6,8 @@
   var LANG_NAMES = { de: 'Deutsch', en: 'English', ru: 'Kyrillisch' };
   var TYPES = ['montage', 'spesen', 'beleg', 'eigen', 'bew', 'km'];
   var FILE_NAMES = { spesen: 'Spesenabrechnung', beleg: 'Abrechnung_gegen_Beleg', km: 'KM-Abrechnung', eigen: 'Eigenbeleg', bew: 'Bewirtungsbeleg', montage: 'Montagebericht' };
-  var LIMITS = { meal: 20, other: 2, beleg: 17, km: 11, eigen: 12, mrow: 14 };
-  var START = { meal: 6, other: 2, beleg: 8, km: 6, eigen: 12, mrow: 8 };
+  var LIMITS = { bewp: 12, meal: 20, other: 2, beleg: 17, km: 11, eigen: 12, mrow: 14 };
+  var START = { bewp: 4, meal: 6, other: 2, beleg: 8, km: 6, eigen: 12, mrow: 8 };
   var MAX_PHOTOS = 30, PHOTO_PX = 1600;
   /* LETHE-Logo, direkt eingebettet, damit es ohne weitere Dateien angezeigt wird. */
   var LOGO = 'data:image/jpeg;base64,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';
@@ -17,6 +17,7 @@
     beleg: function () { return { date: '', text: '', amount: '', kind: '' }; },
     km: function () { return { date: '', dest: '', km: '' }; },
     eigen: function () { return { date: '', text: '', amount: '' }; },
+    bewp: function () { return { text: '' }; },
     mrow: function () { return { date: '', name: '', from: '', to: '', work: '', travel: '', extra: '' }; }
   };
   var PHOTO_RE = /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+\/=]+$/;
@@ -31,6 +32,7 @@
       ui: {
         appTitle: 'Lethe-Vorlagen-Reise',
         privacy: 'Alle Eingaben bleiben auf diesem Gerät. Die Seite sendet nichts ins Netz.',
+        footNote: 'Hinweis zur Berechnung der Std. im Montagebericht (erscheint nicht im PDF-Auszug und nicht in der gesicherten Datei): Std. = Endzeit minus Startzeit, abzüglich Pause. Gesamtzeit über 2:15 h = 15 min Pause, über 6:30 h = weitere 15 min, über 7:30 h = weitere 15 min (insgesamt höchstens 45 min).',
         stepLang: 'Sprache', stepType: 'Art der Vorlage', stepFill: 'Ausfüllen',
         stepSign: 'Unterschreiben', stepSave: 'Sichern',
         signHint: 'Unterschreiben Sie im Feld mit Maus, Finger oder Stift. Erst danach lässt sich speichern.',
@@ -65,7 +67,7 @@
         colDate: 'Datum', colTime: 'Uhrzeit', colFrom: 'von', colTo: 'bis', colHours: 'Anz. Std.', colPlace: 'Ort', colAmount: 'Betrag €',
         spS2: '2) Sonstige pauschale Kostenerstattungen',
         spS2Note: 'z.B. pauschale Erstattung von Telefonkosten, Unterkunft, etc.',
-        bwTitle: 'Bewirtungskosten', bwIntro: 'Angaben zum Nachweis der Höhe und der geschäftlichen Veranlassung von Bewirtungsaufwendungen (§ 4 Abs. 5 Nr. 2 EStG).', bwTag: 'Tag der Bewirtung:', bwOrt: 'Ort der Bewirtung (Name, Anschrift):', bwAnlass: 'Anlass der Bewirtung:', bwPers: 'Bewirtete Personen:', bwHoehe: 'Höhe der Aufwendungen lt. beigefügter Rechnung:', bwRech: 'Rechnungsbetrag', bwTip: 'Trinkgeld', bwSign: 'Unterschrift des Gastgebers',
+        bwTitle: 'Bewirtungskosten', bwIntro: 'Angaben zum Nachweis der Höhe und der geschäftlichen Veranlassung von Bewirtungsaufwendungen (§ 4 Abs. 5 Nr. 2 EStG).', bwTag: 'Tag der Bewirtung:', bwOrt: 'Ort der Bewirtung (Name, Anschrift):', bwName: 'Name des Gastgebers:', bwAnlass: 'Anlass der Bewirtung (Projektname / Vorgang):', bwPers: 'Bewirtete Personen', bwHoehe: 'Höhe der Aufwendungen lt. beigefügter Rechnung:', bwRech: 'Rechnungsbetrag', bwTip: 'Trinkgeld', bwSign: 'Unterschrift des Gastgebers',
         colStd: 'Std. ü. 14 / 24', std14: 'über 14 Std.', std24: 'über 24 Std.', colB: 'Frühstück je 20%', colL: 'Mittagessen je 40%', colD: 'Abendessen je 40%', colKind: 'Art', curLabel: 'Währung:', curEur: '€ (Euro)', curUsd: '$ (US-Dollar)', legTitle: 'Kürzel:', legFA: 'FA = Firmenausgaben', legPA: 'PA = Privatausgelegt', needDest: 'Bitte oben Ort / Land wählen, damit die Beträge berechnet werden.',
         colPeriod: 'Zeitraum', colText: 'Text',
         spTotal: 'Summe pauschale Kosten / Erstattung mit Lohnabrechnung:', spLa: 'LA 9976) stfr',
@@ -82,6 +84,7 @@
       ui: {
         appTitle: 'Lethe-Vorlagen-Reise',
         privacy: 'Everything you enter stays on this device. This page sends nothing over the network.',
+        footNote: 'Note on the calculation of hours in the assembly report (not part of the PDF extract or the saved file): hours = end time minus start time, less breaks. Total time over 2:15 h = 15 min break, over 6:30 h = a further 15 min, over 7:30 h = a further 15 min (45 min at most).',
         stepLang: 'Language', stepType: 'Type of form', stepFill: 'Fill in',
         stepSign: 'Sign', stepSave: 'Save',
         signHint: 'Sign in the box with a mouse, finger or pen. Saving is possible only after that.',
@@ -116,7 +119,7 @@
         colDate: 'Date', colTime: 'Time', colFrom: 'from', colTo: 'to', colHours: 'Hours', colPlace: 'Place', colAmount: 'Amount €',
         spS2: '2) Other flat-rate reimbursements',
         spS2Note: 'e.g. flat-rate reimbursement of phone costs, accommodation, etc.',
-        bwTitle: 'Hospitality expenses', bwIntro: 'Details proving the amount and the business reason of hospitality expenses (§ 4 para. 5 no. 2 German Income Tax Act).', bwTag: 'Date of hospitality:', bwOrt: 'Place of hospitality (name, address):', bwAnlass: 'Occasion:', bwPers: 'Persons entertained:', bwHoehe: 'Amount according to the attached invoice:', bwRech: 'Invoice amount', bwTip: 'Tip', bwSign: 'Signature of the host',
+        bwTitle: 'Hospitality expenses', bwIntro: 'Details proving the amount and the business reason of hospitality expenses (§ 4 para. 5 no. 2 German Income Tax Act).', bwTag: 'Date of hospitality:', bwOrt: 'Place of hospitality (name, address):', bwName: 'Name of the host:', bwAnlass: 'Occasion (project name / case):', bwPers: 'Persons entertained', bwHoehe: 'Amount according to the attached invoice:', bwRech: 'Invoice amount', bwTip: 'Tip', bwSign: 'Signature of the host',
         colStd: 'Hrs over 14 / 24', std14: 'over 14 hrs', std24: 'over 24 hrs', colB: 'Breakfast 20%', colL: 'Lunch 40%', colD: 'Dinner 40%', colKind: 'Type', curLabel: 'Currency:', curEur: '€ (euro)', curUsd: '$ (US dollar)', legTitle: 'Codes:', legFA: 'FA = company expenses', legPA: 'PA = paid privately', needDest: 'Please choose place / country above so the amounts can be calculated.',
         colPeriod: 'Period', colText: 'Description',
         spTotal: 'Total flat-rate costs / reimbursed with payroll:', spLa: 'LA 9976) tax-free',
@@ -133,6 +136,7 @@
       ui: {
         appTitle: 'Lethe-Vorlagen-Reise',
         privacy: 'Все данные остаются на этом устройстве. Страница ничего не отправляет в сеть.',
+        footNote: 'Примечание о расчёте часов в монтажном отчёте (не попадает в PDF и в сохранённый файл): часы = время окончания минус время начала за вычетом перерывов. Общее время свыше 2:15 ч = перерыв 15 мин, свыше 6:30 ч = ещё 15 мин, свыше 7:30 ч = ещё 15 мин (всего не более 45 мин).',
         stepLang: 'Язык', stepType: 'Тип формы', stepFill: 'Заполнить',
         stepSign: 'Подписать', stepSave: 'Сохранить',
         signHint: 'Распишитесь в поле мышью, пальцем или стилусом. Сохранить можно только после этого.',
@@ -167,7 +171,7 @@
         colDate: 'Дата', colTime: 'Время', colFrom: 'с', colTo: 'до', colHours: 'Кол-во ч.', colPlace: 'Место', colAmount: 'Сумма €',
         spS2: '2) Прочие пауш. возмещения расходов',
         spS2Note: 'напр. пауш. возмещение расходов на телефон, проживание и т. д.',
-        bwTitle: 'Представительские расходы', bwIntro: 'Данные для подтверждения размера и деловой причины представительских расходов (§ 4 абз. 5 п. 2 EStG).', bwTag: 'Дата мероприятия:', bwOrt: 'Место (название, адрес):', bwAnlass: 'Повод:', bwPers: 'Приглашённые лица:', bwHoehe: 'Сумма согласно приложенному счёту:', bwRech: 'Сумма счёта', bwTip: 'Чаевые', bwSign: 'Подпись принимающей стороны',
+        bwTitle: 'Представительские расходы', bwIntro: 'Данные для подтверждения размера и деловой причины представительских расходов (§ 4 абз. 5 п. 2 EStG).', bwTag: 'Дата мероприятия:', bwOrt: 'Место (название, адрес):', bwName: 'Имя принимающей стороны:', bwAnlass: 'Повод (проект / дело):', bwPers: 'Приглашённые лица', bwHoehe: 'Сумма согласно приложенному счёту:', bwRech: 'Сумма счёта', bwTip: 'Чаевые', bwSign: 'Подпись принимающей стороны',
         colStd: 'Ч. свыше 14 / 24', std14: 'свыше 14 ч', std24: 'свыше 24 ч', colB: 'Завтрак 20%', colL: 'Обед 40%', colD: 'Ужин 40%', colKind: 'Вид', curLabel: 'Валюта:', curEur: '€ (евро)', curUsd: '$ (доллар США)', legTitle: 'Обозначения:', legFA: 'FA = расходы компании', legPA: 'PA = оплачено из своих средств', needDest: 'Выберите место / страну выше, чтобы рассчитать суммы.',
         colPeriod: 'Период', colText: 'Текст',
         spTotal: 'Итого пауш. расходы / выплата с зарплатой:', spLa: 'LA 9976) не облагается налогом',
@@ -202,8 +206,8 @@
     name: '', occasion: '', dest: '', city: '', date: localToday(), sig: null, plate: '',
     meal: makeRows('meal'), other: makeRows('other'), beleg: makeRows('beleg'), km: makeRows('km'), eigen: makeRows('eigen'),
     cur: { beleg: 'EUR', eigen: 'EUR', bew: 'EUR' },
-    mrow: makeRows('mrow'), sigCust: null,
-    bew: { tag: '', ort: '', anlass: '', personen: '', rechnung: '', trinkgeld: '' },
+    mrow: makeRows('mrow'), bewp: makeRows('bewp'), sigCust: null,
+    bew: { tag: '', ort: '', rechnung: '', trinkgeld: '' },
     mo: { vorgang: '', kunde: '', ort: '', schiff: '', zeitraum: '', liefer: false, montage: true, arbeiten: '', bemerkung: '' },
     mofotos: []
   };
@@ -261,13 +265,13 @@
     if (m < 0) m += 1440;
     return m / 60;
   }
-  /* Arbeitszeit: Ende minus Start, davon Pausen abgezogen: über 2:15 h = 15 min, über 6:30 h = weitere 15 min, über 9:00 h = weitere 15 min. */
+  /* Arbeitszeit: Ende minus Start, davon Pausen abgezogen: über 2:15 h = 15 min, über 6:30 h = weitere 15 min, über 7:30 h = weitere 15 min. */
   function netHours(from, to) {
     if (!from || !to) return '';
     var a = from.split(':'), b = to.split(':');
     var m = (+b[0] * 60 + +b[1]) - (+a[0] * 60 + +a[1]);
     if (m < 0) m += 1440;
-    var pause = (m > 135 ? 15 : 0) + (m > 390 ? 15 : 0) + (m > 540 ? 15 : 0);
+    var pause = (m > 135 ? 15 : 0) + (m > 390 ? 15 : 0) + (m > 450 ? 15 : 0);
     return (m - pause) / 60;
   }
   function setOut(id, text) {
@@ -482,13 +486,20 @@
       return '<div class="bw-m"><span>' + esc(label) + '</span><input type="text" class="num" inputmode="decimal" data-k="bew" data-f="' + field + '" value="' + esc(b[field]) +
         '" aria-label="' + esc(label) + '"><b>' + esc(curSym()) + '</b></div>';
     };
+    var line = function (label, inner) { return '<label class="line"><span>' + esc(label) + '</span>' + inner + '</label>'; };
+    var pers = state.bewp.map(function (r, i) {
+      return '<tr class="r-bewp"><td data-c="text" data-label="' + esc(f.bwPers) + '">' + cell('bewp', i, 'text', 'text', r.text, f.bwPers) + '</td>' + rmCell('bewp', i) + '</tr>';
+    }).join('');
     return '<h2 class="p-title">' + esc(f.bwTitle) + '</h2><p class="bw-intro">' + esc(f.bwIntro) + '</p>' +
-      '<div class="p-meta">' + curSelect() + '</div>' +
+      '<div class="p-meta">' +
+      line(f.bwName, '<input type="text" id="f-name" data-k="name" autocomplete="name" value="' + esc(state.name) + '">') +
+      line(f.bwTag, '<input type="date" data-k="bew" data-f="tag" value="' + esc(b.tag) + '">') +
+      line(f.bwAnlass, '<input type="text" id="f-occasion" data-k="occasion" value="' + esc(state.occasion) + '">') +
+      line(f.bwOrt, '<input type="text" data-k="bew" data-f="ort" value="' + esc(b.ort) + '">') +
+      curSelect() + '</div>' +
+      '<table class="grid"><colgroup><col><col class="noprint c-rm"></colgroup>' +
+      '<thead><tr><th>' + esc(f.bwPers) + '</th><th class="noprint c-rm"></th></tr></thead><tbody>' + pers + '</tbody></table>' + addBtn('bewp') +
       '<div class="bw">' +
-      bwBox('half', f.bwTag, '<input type="date" data-k="bew" data-f="tag" value="' + esc(b.tag) + '" aria-label="' + esc(f.bwTag) + '">') +
-      bwBox('half', f.bwOrt, moArea('bew', 'ort', null, b.ort, f.bwOrt, 3)) +
-      bwBox('full', f.bwAnlass, moArea('bew', 'anlass', null, b.anlass, f.bwAnlass, 3)) +
-      bwBox('full', f.bwPers, moArea('bew', 'personen', null, b.personen, f.bwPers, 6)) +
       bwBox('full', f.bwHoehe, '<div class="bw-money">' + money('rechnung', f.bwRech) + money('trinkgeld', f.bwTip) + '</div>') +
       '</div>' +
       '<div class="p-sign eb-sign">' +
@@ -778,6 +789,9 @@
     $('#pad').setAttribute('aria-label', mont ? ui.fSigTech : ui.fSignature);
     $('#pad2').setAttribute('aria-label', ui.fSigClient);
     $('#client-sign').hidden = !mont;
+    var fn = $('#foot-note');
+    fn.hidden = !mont;
+    fn.textContent = ui.footNote;
     $('#lab-pad1').hidden = !mont;
     $('#lab-pad1').textContent = ui.padTech;
     $('#lab-pad2').textContent = ui.padClient;
@@ -790,13 +804,10 @@
     if (state.type === 'montage') {
       if (!state.mo.kunde.trim()) miss.push(ui.fCustomer);
       if (!state.sig) miss.push(ui.fSigTech);
-    } else if (state.type === 'bew') {
-      if (!state.bew.anlass.trim()) miss.push(T().f.bwAnlass.replace(/:$/, ''));
-      if (!state.sig) miss.push(T().f.bwSign);
     } else {
       if (!state.name.trim()) miss.push(ui.fName);
       if (!state.occasion.trim()) miss.push(ui.fOccasion);
-      if (!state.sig) miss.push(ui.fSignature);
+      if (!state.sig) miss.push(state.type === 'bew' ? T().f.bwSign : ui.fSignature);
     }
     $('#btn-pdf').disabled = miss.length > 0;
     $('#btn-json').disabled = miss.length > 0;
@@ -1173,7 +1184,7 @@
       return mp.join('_');
     }
     var parts = [FILE_NAMES[state.type]];
-    var n = slug(state.type === 'bew' ? state.bew.anlass : state.name);
+    var n = slug(state.name);
     if (n) parts.push(n);
     parts.push(state.date || localToday());
     return parts.join('_');
@@ -1246,7 +1257,7 @@
       version: 1, lang: state.lang, type: state.type,
       name: state.name, occasion: state.occasion, dest: state.dest, city: state.city, date: state.date, plate: state.plate,
       meal: state.meal, other: state.other, beleg: state.beleg, km: state.km, eigen: state.eigen,
-      cur: state.cur, bew: state.bew, sig: state.sig,
+      cur: state.cur, bew: state.bew, bewp: state.bewp, sig: state.sig,
       mrow: state.mrow, mo: state.mo, mofotos: state.mofotos, sigCust: state.sigCust
     };
     var json = JSON.stringify(data, null, 2);
@@ -1280,8 +1291,7 @@
     });
     state.beleg.forEach(function (r) { r.kind = r.kind === 'FA' || r.kind === 'PA' ? r.kind : ''; });
     var bw = d.bew && typeof d.bew === 'object' ? d.bew : {};
-    ['tag', 'rechnung', 'trinkgeld'].forEach(function (k) { state.bew[k] = str(bw[k]); });
-    ['ort', 'anlass', 'personen'].forEach(function (k) { state.bew[k] = typeof bw[k] === 'string' ? bw[k].slice(0, 2000) : ''; });
+    ['tag', 'ort', 'rechnung', 'trinkgeld'].forEach(function (k) { state.bew[k] = str(bw[k]); });
     state.mrow.forEach(function (r) { ['work', 'travel', 'extra'].forEach(function (c) { r[c] = r[c] === '1' ? '1' : ''; }); });
     ['beleg', 'eigen', 'bew'].forEach(function (t) { state.cur[t] = d.cur && d.cur[t] === 'USD' ? 'USD' : 'EUR'; });
     state.dest = destValid(str(d.dest)) ? str(d.dest) : '';
