@@ -179,6 +179,12 @@ body {
 .grid td input[type=checkbox] { display: block; width: 16px; height: 16px; margin: 4px auto; padding: 0; accent-color: #143868; }
 .need-dest { color: #b61f52; }
 .p-total.sub { margin-top: 6px; }
+/* Befundungsprotokoll */
+.grid.bf th { font-weight: 400; text-align: left; }
+.bf-c1 { width: 36%; } .bf-c2 { width: 16%; }
+.grid.bf td.bf-p { padding: 4px 6px; }
+.paper textarea.mo-area[data-k=bf] { min-height: 70px; }
+.grid.bf + .mo-bar, .grid.bf ~ .mo-bar { margin-top: 14px; }
 /* Bewirtungsbeleg */
 .bw-intro { margin: 0 0 4px; font-size: 12px; }
 .bw { display: grid; grid-template-columns: 1fr; border: 1px solid #000; margin-top: 16px; }
@@ -252,6 +258,10 @@ body {
 
 /* Smartphone: Zeilen werden zu Karten, Eingaben haben Touch-Größe */
 @media screen and (max-width: 720px) {
+  .r-bf { grid-template-areas: "point point" "res note"; }
+  td[data-c="point"] { grid-area: point; font-weight: 700; padding: 6px 0 !important; }
+  td[data-c="res"] { grid-area: res; }
+  td[data-c="note"] { grid-area: note; }
   .app {
     padding-block: calc(16px + env(safe-area-inset-top, 0px)) calc(40px + env(safe-area-inset-bottom, 0px));
     gap: 14px;
@@ -506,3 +516,9 @@ dialog#dlg h3 { margin: 16px 0 6px; font-size: 15px; }
 @media print { .rte, .rte-bar { display: none !important; } .pt.rich { min-height: 12mm; } }
 
 .foot-note { margin: 18px 0 8px; padding: 8px 12px; font-size: 12px; color: #4a5565; border-top: 1px solid #c9ced6; }
+@media print {
+  .grid.bf td, .grid.bf th { padding-top: 1px; padding-bottom: 1px; font-size: 10pt; }
+  .grid.bf td input, .grid.bf td select { height: 18px; padding-top: 0; padding-bottom: 0; }
+  .grid.bf td.bf-p { padding: 2px 6px; }
+  .grid.bf ~ .mo-bar, .p-meta + .mo-bar { margin-top: 8px; }
+}
