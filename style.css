@@ -522,3 +522,23 @@ dialog#dlg h3 { margin: 16px 0 6px; font-size: 15px; }
   .grid.bf td.bf-p { padding: 2px 6px; }
   .grid.bf ~ .mo-bar, .p-meta + .mo-bar { margin-top: 8px; }
 }
+
+.bf-blk { margin-top: 18px; padding-top: 6px; border-top: 2px solid #143868; }
+.bf-pos { display: flex; align-items: center; gap: 10px; }
+.bf-pos .line { flex: 1 1 auto; font-weight: 700; }
+.bf-pos .rm { flex: none; }
+.paper textarea.mo-area[data-k=bfa] { min-height: 56px; }
+@media print {
+  .bf-blk { margin-top: 0; padding-top: 0; border-top: 0; }
+  .bf-blk + .bf-blk { break-before: page; }
+  .bf-blk { break-inside: avoid; }
+  .bf-blk:first-of-type { margin-top: 6px; }
+}
+@media print {
+  .bf-blk .pt { min-height: 8mm; }
+  .bf-pos .line { margin: 0; }
+  .grid.bf td, .grid.bf th { font-size: 9.5pt; }
+  .grid.bf td input, .grid.bf td select { height: 16px; }
+  .p-meta + .bf-blk { margin-top: 10px; }
+  .bf-blk ~ .p-sign { margin-top: 8px; }
+}
